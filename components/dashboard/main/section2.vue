@@ -1,9 +1,9 @@
 <template>
     <div>
         <section class="my-2">
-            <span class="text-xl text-gray-500 my-2">
+            <!-- <span class="text-xl text-gray-500 my-2">
                 Thống kê:
-            </span>
+            </span> -->
             <div class="w-full grid grid-cols-4 gap-3">
                 <span class="w-full">
                     <DashboardCard class="h-full">

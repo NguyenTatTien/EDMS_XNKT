@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-primevue',
-    '@ant-design-vue/nuxt'
+    '@ant-design-vue/nuxt',
+    '@pinia/nuxt',
   ],
   primevue: {
     cssLayerOrder: 'reset,primevue'
