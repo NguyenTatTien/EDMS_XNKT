@@ -1,1 +1,1 @@
-export { default } from "file:///Users/vc/Desktop/app/lda-portal/EDMS-FE/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export { default } from "file:///D:/App/LDA/EDMS-FE/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"

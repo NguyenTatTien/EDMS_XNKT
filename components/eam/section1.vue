@@ -93,18 +93,6 @@
                                     2 đang thực hiện
                                 </span>
                             </span>
-                            <span class="w-full flex items-center mt-2">
-                                <span class="text-blue-500 text-xs mr-2">●</span>
-                                <span class="text-gray-500">
-                                    2 đang thực hiện
-                                </span>
-                            </span>
-                            <span class="w-full flex items-center mt-2">
-                                <span class="text-blue-500 text-xs mr-2">●</span>
-                                <span class="text-gray-500">
-                                    2 đang thực hiện
-                                </span>
-                            </span>
                         </span>
                     </div>
                 </template>

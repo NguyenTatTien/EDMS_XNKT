@@ -3,7 +3,7 @@
         <a-table class="w-full" :pagination="{pageSize: pageSize, total: total}"  :columns="columns" :data-source="modelValue.data"  :expand-column-width="100">
             <template #bodyCell="{ column, record }">
                 <template v-if="column.key === 'assCode'">
-                    <NuxtLink :to="`/thiet-bi/${record.assCode}`">{{ record.assCode }}</NuxtLink>
+                    <NuxtLink :to="`/eam/assets/${record.assCode}`">{{ record.assCode }}</NuxtLink>
                 </template>
                 <template v-if="column.key === 'action'">
                 <span class="w-full flex">
@@ -17,12 +17,12 @@
   <script setup>
 import { ref,toRaw } from 'vue';
 import { storeToRefs } from 'pinia';
-
 import { PoweroffOutlined } from '@ant-design/icons-vue'
+
 const columns = [
     { title: 'Loại', dataIndex: 'assType', key: 'assType', fixed: true, width: 60 },
     { title: 'Mã', dataIndex: 'assCode', key: 'assCode', fixed: true, width:300 },
-    { title: 'Tổ chức', dataIndex: 'assOrg', key: 'assOrg', fixed: true, width: 80 },
+    { title: 'Tổ chức', dataIndex: 'assOrg', key: 'assOrg', fixed: true, width: 120 },
     { title: 'Mô tả', dataIndex: 'assDesc', key: 'assDesc', fixed: true },
     { title: 'Loại lớp', dataIndex: 'assClass', key: 'assClass', fixed: true },
     // { title: 'Tổ chức lớp', dataIndex: 'assClassOrg', key: 'assClassOrg', fixed: true },

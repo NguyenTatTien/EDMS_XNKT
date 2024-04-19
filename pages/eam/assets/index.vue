@@ -3,8 +3,7 @@
       <div class="container w-full">
         <EamFilter></EamFilter>
         <EamSection1></EamSection1>
-        <!-- <EamTable class="rounded-lg shadow-md mt-4"></EamTable> -->
-        {{ data }}
+        <EamTable class="rounded-lg shadow-md mt-4" v-model="model"></EamTable>
       </div>
     </div>
   </template>
@@ -16,7 +15,7 @@ import axios from 'axios';
 import Button from 'primevue/button';
 const item = ref({})
 item.value = "1"
-const data = ref({})
+const model = ref({})
 //onMounted
 onMounted(() => {
     init();
@@ -28,14 +27,8 @@ const init = async(page=1,pageSize=10,search="") => {
         
     })
     console.log(res.data)
-    data.value = res.data;
+    model.value = res.data;
 }
 
-const getByID = async(id) => {
-    let endpoint = "http://localhost:5010/api";
-    let res = await axios.get(`${endpoint}/asset/id?id=${id}`, {
-    
-    })
-    return res;
-}
+
 </script>
