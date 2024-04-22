@@ -15,26 +15,33 @@
                     </a>
                 </template>
             </Breadcrumb>
-            <div v-if="model.inspection" class="w-full grid grid-cols-12 gap-3">
+            <div class="w-full grid grid-cols-12 gap-3">
                 <section class="col-span-9">
-                    <a-form >
+                    <a-form>
                         <a-form-item label="Field A">
-                            <a-input v-model:value="model.inspection.AssetCode" placeholder="input placeholder" />
+                            <a-input v-model:value="model.assetCode" placeholder="input placeholder" />
                         </a-form-item>
                         <a-form-item label="Field B">
-                            <a-input v-model:value="model.inspection.Comment" placeholder="input placeholder" />
+                            <a-input v-model:value="model.comment" placeholder="input placeholder" />
                         </a-form-item>
                     </a-form>
-                    <span @click="initTieuChuanTuanKiem()">
-                        dong y
-                    </span>
                     <span @click="addDetail()">
                         add
                     </span>
+                    <a-form>
+                        <a-form-item label="Field A">
+                            <a-input v-model:value="detailModel.partCode" placeholder="input placeholder" />
+                        </a-form-item>
+                        <a-form-item label="Field B">
+                            <a-input v-model:value="detailModel.result" placeholder="input placeholder" />
+                        </a-form-item>
+                        <a-form-item label="Field B">
+                            <a-input v-model:value="detailModel.statusCode" placeholder="input placeholder" />
+                        </a-form-item>
+                    </a-form>
                     <ul>
-                       <li v-for="(item,index) in model.inspection.InspectionDetails" :key="index">
+                       <li v-for="(item,index) in model.inspectionDetails" :key="index">
                            {{ item }}
-                           <input type="text" v-model="item.Result">
                        </li> 
                     </ul>
                     <code>
@@ -76,11 +83,27 @@ const detailModel = ref({
     inspectionId: 0
 })
 
-const model = ref({})
-
-onMounted(async () => {
-    model.value = await getByID(useRoute().params.id)
-})
+const model = ref(
+    {
+        "assetCode": "string",
+        "comment": "string",
+        "inspectionDetails": [
+            {
+                "partCode": "string",
+                "result": "string",
+                "statusCode": 0,
+                "test": 0,
+                "inspectionId": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "string",
+                "url": "string"
+            }
+        ]
+    }
+)
 
 const addDetail = () => {
     model.value.inspectionDetails.push(detailModel.value)
@@ -88,28 +111,9 @@ const addDetail = () => {
 
 const save = async () => { 
     let endpoint = "http://localhost:5010/api";
-    let res = await axios.put(`${endpoint}/Inspection`, toRaw(model.value))
+    let res = await axios.post(`${endpoint}/Inspection`, toRaw(model.value))
     model.value = res.data;
     useRouter().push({ path: '/eam/inspection' })
-    return res;
-}
-
-const initTieuChuanTuanKiem = async () => {
-    await getTieuChuanTuanKiem(model.value.inspection.AssetCode)
-}
-
-const getByID = async(id) => {
-    let endpoint = "http://localhost:5010/api";
-    let res = await axios.get(`${endpoint}/Inspection/${id}`, {
-    
-    })
-    return res.data;
-}
-const getTieuChuanTuanKiem = async(id) => {
-    let endpoint = "http://localhost:5010/api";
-    let res = await axios.get(`${endpoint}/asset/id?id=${id}`, {
-    
-    })
     return res;
 }
 

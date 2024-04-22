@@ -15,3 +15,12 @@ import Button from 'primevue/button';
 const item = ref({})
 item.value = "1"
 </script>
+
+<style>
+.p-breadcrumb {
+  background: #ffffff;
+  border: 0 none;
+  border-radius: 6px;
+  padding: 0.5rem !important;
+}
+</style>

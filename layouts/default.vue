@@ -19,6 +19,10 @@
   </template>
   
   <style>
- 
+  .p-breadcrumb {
+    background: #ffffff;
+    border: 0 none;
+    border-radius: 6px;
+    padding: 0.1rem !important;
+  }
   </style>
-  

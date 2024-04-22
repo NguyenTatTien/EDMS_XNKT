@@ -1,10 +1,9 @@
 <template>
     <div>
-        {{modelValue}}
         <a-table class="w-full" :columns="columns" :data-source="modelValue"  :expand-column-width="100">
             <template #bodyCell="{ column, record }">
-                <template v-if="column.key === 'assCode'">
-                    <NuxtLink :to="`/eam/assets/${record.assCode}`">{{ record.assCode }}</NuxtLink>
+                <template v-if="column.key === 'assetCode'">
+                    <NuxtLink :to="`/eam/inspection/${record.id}`">{{ record.assetCode }}</NuxtLink>
                 </template>
                 <template v-if="column.key === 'action'">
                 <span class="w-full flex">
@@ -43,8 +42,7 @@ const columns = [
   console.log()
 
   onMounted(async () => {
-    pageSize.value = toRaw(props.modelValue).pagination.pageSize;
-    total.value = toRaw(props.modelValue).pagination.total;
+    
   })
 
   </script>

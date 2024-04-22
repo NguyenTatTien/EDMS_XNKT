@@ -13,11 +13,14 @@
                 <MultiSelect v-model="selectedCities" :options="cities" optionLabel="name" placeholder="Select Cities"
                 :maxSelectedLabels="3" class="w-full md:w-20rem" />
             </span>
-            <span class="p-0 rounded-lg col-span-2">
+            <span class="p-0 rounded-lg col-span-2 flex items-center">
                 <IconField iconPosition="left" class="w-full">
                     <InputIcon class="pi pi-search"> </InputIcon>
                     <InputText v-model="value1" placeholder="Search" class="w-full"/>
                 </IconField>
+                <div>
+                    <slot></slot>
+                </div>
             </span>
         </div>
     </div>
