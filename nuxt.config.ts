@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     'nuxt-primevue',
     '@ant-design-vue/nuxt',
     '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
   primevue: {
     cssLayerOrder: 'reset,primevue'

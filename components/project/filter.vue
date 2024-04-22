@@ -2,21 +2,21 @@
     <div>
         <div class="w-full grid grid-cols-5 mt-3 gap-3">
             <span class="p-0 rounded-lg">
-                <MultiSelect v-model="selectedCities" :options="cities" optionLabel="name" placeholder="Select Cities"
+                <MultiSelect v-model="selectedKhoi" :options="khoi" optionLabel="name" placeholder="Chọn khối"
                 :maxSelectedLabels="3" class="w-full md:w-20rem" />
             </span>
             <span class="p-0 rounded-lg">
-                <MultiSelect v-model="selectedCities" :options="cities" optionLabel="name" placeholder="Select Cities"
+                <MultiSelect v-model="selectedBan" :options="ban" optionLabel="name" placeholder="Chọn ban"
                 :maxSelectedLabels="3" class="w-full md:w-20rem" />
             </span>
             <span class="p-0 rounded-lg">
-                <MultiSelect v-model="selectedCities" :options="cities" optionLabel="name" placeholder="Select Cities"
+                <MultiSelect v-model="selectedPhong" :options="phong" optionLabel="name" placeholder="Chọn phòng"
                 :maxSelectedLabels="3" class="w-full md:w-20rem" />
             </span>
             <span class="p-0 rounded-lg col-span-2 flex items-center">
                 <IconField iconPosition="left" class="w-full">
                     <InputIcon class="pi pi-search"> </InputIcon>
-                    <InputText v-model="value1" placeholder="Search" class="w-full"/>
+                    <InputText v-model="value1" placeholder="Tìm kiếm" class="w-full"/>
                 </IconField>
                 <div>
                     <slot></slot>
@@ -28,16 +28,13 @@
 
 <script setup>
 import { ref } from "vue";
+import { useKhoiBanPhong } from "~/stores/KhoiBanPhong";
+import { storeToRefs } from "pinia";
 
-const selectedCities = ref();
-const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-]);
+const { khoi, ban, phong } = storeToRefs(useKhoiBanPhong())
 
-const value1 = ref(null);
-const value2 = ref(null);
+const selectedKhoi = ref();
+const selectedBan = ref();
+const selectedPhong = ref();
+
 </script>
