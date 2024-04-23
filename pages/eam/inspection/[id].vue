@@ -91,7 +91,7 @@ const save = async () => {
     let res = await axios.put(`${endpoint}/Inspection`, toRaw(model.value))
     model.value = res.data;
     useRouter().push({ path: '/eam/inspection' })
-    return res;
+    return res; 
 }
 
 const initTieuChuanTuanKiem = async () => {

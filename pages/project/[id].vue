@@ -20,10 +20,12 @@
             <div class="col-span-9">
                 <a-tabs v-model:activeKey="activeKey">
                     <a-tab-pane key="1" tab="Dạng danh sách">
-                        {{ model}}
+                        <ProjectTreeTable></ProjectTreeTable>
                     </a-tab-pane>
                     <a-tab-pane key="2" tab="Bảng Kanban" force-render>
-                        {{ model}}
+                      <ClientOnly>
+                        <!-- <ProjectKanban></ProjectKanban> -->
+                      </ClientOnly>
                     </a-tab-pane>
                     <a-tab-pane key="3" tab="Bảng Gantt">
                         {{ model}}
@@ -70,6 +72,30 @@
     { label: `Dự án ${model.name}` }
   ]);
   
+  const list = ref([
+        {
+          name: "task 1",
+          tasks: [
+            {
+              name: "task 2",
+              tasks: []
+            }
+          ]
+        },
+        {
+          name: "task 3",
+          tasks: [
+            {
+              name: "task 4",
+              tasks: []
+            }
+          ]
+        },
+        {
+          name: "task 5",
+          tasks: []
+        }
+      ])
   
   //onMounted
   onMounted(() => {
