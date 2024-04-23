@@ -18,6 +18,7 @@
     "pinia": "^2.1.7",
     "primeicons": "^7.0.0",
     "primevue": "^3.51.0",
+    "sortablejs": "^1.15.2",
     "v-shared-element": "^3.1.1",
     "vue": "^3.4.21",
     "vue-draggable-next": "^2.2.1",

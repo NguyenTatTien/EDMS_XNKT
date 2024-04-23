@@ -5,7 +5,15 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' },
-    
+    head: {
+      link: [
+        // { rel: 'stylesheet', href: 'bootstrap/dist/css/bootstrap.min.css' },
+      ],
+      script: [
+        { src: 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js' },
+        { src: '//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/4.0.0/vuedraggable.umd.min.js' },
+      ],
+    },
   },
   modules: [
     '@nuxtjs/tailwindcss',

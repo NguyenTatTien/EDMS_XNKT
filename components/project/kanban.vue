@@ -1,100 +1,126 @@
 <template>
-    <div class="row">
-      <div class="col-2">
-        <div class="form-group">
-          <div
-            class="btn-group-vertical buttons"
-            role="group"
-            aria-label="Basic example"
-          >
-            <button class="btn btn-secondary" @click="add">Add</button>
-            <button class="btn btn-secondary" @click="replace">Replace</button>
-          </div>
-  
-          <div class="form-check">
-            <input
-              id="disabled"
-              type="checkbox"
-              v-model="enabled"
-              class="form-check-input"
-            />
-            <label class="form-check-label" for="disabled">DnD enabled</label>
-          </div>
-        </div>
-      </div>
-  
-      <div class="col-6">
-        <h3>Draggable {{ draggingInfo }}</h3>
-  
+  <div class="flex justify-center">
+    <div class="flex mx-10">
+      <div class="card1 w-64 flex justify-center px-5">
         <draggable
-          :list="list"
-          :disabled="!enabled"
-          item-key="name"
-          class="list-group"
-          ghost-class="ghost"
+          class="dragArea list-group w-full"
+          :list="list1"
+          :group="{ name: 'people' }"
+          :sort="true"
+          @change="log"
           :move="checkMove"
-          @start="dragging = true"
-          @end="dragging = false"
         >
-          <template #item="{ element }">
-            <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
-              {{ element.name }}
-            </div>
-          </template>
+        <transition-group type="transition" name="flip-list">
+          <div
+            class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+            v-for="element in list1"
+            :key="element.name"
+          >
+            {{ element.name }}
+          </div>
+        </transition-group>
+        </draggable>
+      </div>
+      <div class="card1 w-64 flex justify-center">
+        <draggable
+          class="dragArea list-group w-full"
+          :list="list2"
+          group="people"
+          @change="log"
+          :move="checkMove"
+        >
+          <div
+            class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+            v-for="element in list2"
+            :key="element.name"
+          >
+            {{ element.name }}
+          </div>
+        </draggable>
+      </div>
+      <div class="card1 w-64 flex justify-center">
+        <draggable
+          class="dragArea list-group w-full"
+          :list="list2"
+          group="people"
+          @change="log"
+          :move="checkMove"
+        >
+          <div
+            class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+            v-for="element in list2"
+            :key="element.name"
+          >
+            {{ element.name }}
+          </div>
         </draggable>
       </div>
     </div>
-  </template>
-  
-  <script>
-  let id = 1;
-  export default {
-    name: "simple",
-    display: "Simple",
-    order: 0,
-    components: {
-      draggable
-    },
-    data() {
-      return {
-        enabled: true,
-        list: [
-          { name: "John", id: 0 },
-          { name: "Joao", id: 1 },
-          { name: "Jean", id: 2 }
-        ],
-        dragging: false
-      };
-    },
-    computed: {
-      draggingInfo() {
-        return this.dragging ? "under drag" : "";
-      }
-    },
-    methods: {
-      add: function() {
-        this.list.push({ name: "Juan " + id, id: id++ });
-      },
-      replace: function() {
-        this.list = [{ name: "Edgard", id: id++ }];
-      },
-      checkMove: function(e) {
-        window.console.log("Future index: " + e.draggedContext.futureIndex);
-      }
+
+    <div class="flex justify-between">
+      <rawDisplays class="w-64 mr-1" :value="list1" />
+      <rawDisplays class="w-64" :value="list2" />
+    </div>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+import { VueDraggableNext } from 'vue-draggable-next'
+import rawDisplays from './rawDisplay.vue'
+export default defineComponent({
+  name: 'App',
+  components: {
+    draggable: VueDraggableNext,
+
+    rawDisplays,
+  },
+  data() {
+    return {
+      enabled: true,
+      list1: [
+        { name: 'John', id: 1 },
+        { name: 'Joao', id: 2 },
+        { name: 'Jean', id: 3 },
+        { name: 'Gerard', id: 4 },
+      ],
+      list2: [
+        { name: 'Juan', id: 5 },
+        { name: 'Edgard', id: 6 },
+        { name: 'Johnson', id: 7 },
+      ],
+      dragging: false,
     }
-  };
-  </script>
-  <style scoped>
-  .buttons {
-    margin-top: 35px;
-  }
-  
-  .ghost {
-    opacity: 0.5;
-    background: #c8ebfb;
-  }
-  
-  .not-draggable {
-    cursor: no-drop;
-  }
-  </style>
+  },
+  methods: {
+    add() {
+      console.log('add')
+    },
+    replace() {
+      console.log('replace')
+    },
+    checkMove(event) {
+      console.log('checkMove', event.draggedContext)
+      console.log('Future index: ' + event.draggedContext.futureIndex)
+    },
+    log(event) {
+      const { moved, added } = event
+
+      if (moved) console.log('moved', moved)
+      if (added) console.log('added', added, added.element)
+    },
+  },
+})
+</script>
+<style>
+.item-attribute {
+  padding: 10px;
+  border: 1px solid black;
+}
+.clone-grid {
+  display: flex;
+}
+.flip-list-move {
+  transition: transform 0.5s;
+}
+</style>

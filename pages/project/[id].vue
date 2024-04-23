@@ -24,7 +24,7 @@
                     </a-tab-pane>
                     <a-tab-pane key="2" tab="Bảng Kanban" force-render>
                       <ClientOnly>
-                        <!-- <ProjectKanban></ProjectKanban> -->
+                        <ProjectKanban></ProjectKanban>
                       </ClientOnly>
                     </a-tab-pane>
                     <a-tab-pane key="3" tab="Bảng Gantt">
