@@ -29,4 +29,9 @@ import 'primeicons/primeicons.css'
   opacity: 0;
   /* filter: blur(1rem); */
 }
+
+html,body, #__nuxt{
+    height: 100%;
+    margin: 0 !important;
+}
 </style>

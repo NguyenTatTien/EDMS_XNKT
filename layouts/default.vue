@@ -12,6 +12,7 @@
           </NuxtLink>
         </span>
       </section> -->
+      <LayoutSidebar/>
       <ClientOnly>
         <slot />
       </ClientOnly>

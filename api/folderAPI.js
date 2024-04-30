@@ -1,0 +1,80 @@
+import axios from 'axios'
+import {urlFolderGetNotParentByCategory,urlFolderGetByParentAndCategory,urlMoveFolderToFolder,urlCretateFolder,urlUpdateFolder,urlDeleteFolder} from './setupAPI.js'
+export const folderGetNotParentByCategory = async (categoryId) => {
+    try {
+      const response = await axios.get(`${urlFolderGetNotParentByCategory}?categoryId=${categoryId}`, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  };
+  export const folderGetByParentAndCategory = async (parentId,categoryId) => {
+    try {
+      const response = await axios.get(`${urlFolderGetByParentAndCategory}?parentId=${parentId}&categoryId=${categoryId}`, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  };
+  export const moveFolderToFolder = async (folderMoveId,folderPasteId) => {
+    try {
+      const response = await axios.post(`${urlMoveFolderToFolder}?folderMoveId=${folderMoveId}&folderPasteId=${folderPasteId}`, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  };
+  export const createFolderAPI = async (folder) => {
+    try {
+      const response = await axios.post(`${urlCretateFolder}`,folder, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  };
+  export const updateFolderAPI = async (folder) => {
+    try {
+      const response = await axios.put(`${urlUpdateFolder}`,folder, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  }
+  export const deleteFolderAPI = async (id) => {
+    try {
+      const response = await axios.delete(`${urlDeleteFolder}?Id=${id}`, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  }

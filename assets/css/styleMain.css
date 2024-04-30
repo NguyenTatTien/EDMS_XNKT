@@ -1,0 +1,34 @@
+#card_head .p-card-body{
+    padding: 0 !important;
+}
+.p-datatable-wrapper{
+    max-height: 80% !important;
+    overflow: auto !important;
+}
+.p-card-body, .p-card-content{
+    height: 100% !important;
+}
+.p-datatable .p-checkbox-box{
+    border: 1px solid #a8c4ee;
+}
+#card_head ol {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: #6b7280;
+    font-weight: 600;
+    font-size: 14px;
+}
+.calendar-show input{
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-size: 12px;
+    text-align: left;
+    padding: 0 !important;
+    
+}

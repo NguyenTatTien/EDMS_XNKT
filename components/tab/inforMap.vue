@@ -1,0 +1,169 @@
+<template>
+    <VueFlow
+ :nodes="nodes" :edges="edges"
+ class=".vue-flow__node-custom" 
+/>
+</template>
+<script setup>
+import { VueFlow } from '@vue-flow/core'
+const nodes = ref([
+ {
+   id: '1',
+   position: { x: -250, y: 300 },
+   label: 'Tab',
+ },
+ { id: '2', label: 'Doucment', position: { x: -15, y: 300 }, },
+ { id: '3', label: 'Design Document', position: { x: 200, y: 400 } },
+ { id: '4', label: 'Vendor Document', position: { x: 200, y: 300 } },
+ { id: '5', label: 'Standard Document', position: { x: 250, y: 50 } },
+ { id: '6', label: 'Layout', position: { x:400, y: 450 } },
+ { id: '7', label: 'DataSheet', position: { x: 350, y: 550 } },
+ { id: '8', label: 'ISO', position: { x: 500, y: 0 } },
+ { id: '9', label: 'TCVN', position: { x: 500, y: 100 } },
+ { id: '10', label: 'Document-001', position: { x: 500, y: 200 } },
+ { id: '11', label: 'Document-002', position: { x: 500, y: 250 } },
+ { id: '12', label: 'Document-003', position: { x: 500, y: 300 } },
+ { id: '13', label: 'Document-004', position: { x: 500, y: 350 } },
+ { id: '14', label: 'ISO-1234', position: { x: 800, y: -50 } },
+ { id: '15', label: 'ISO-4567', position: { x: 800, y: 0 } },
+ { id: '16', label: 'TCVN-4567-2333', position: { x: 800, y: 100 } },
+ { id: '17', label: 'TCVN-1322-1233', position: { x: 800, y: 150 } },
+ { id: '18', label: 'TCVN-1322-1233', position: { x: 800, y: 200 } },
+ { id: '19', label: 'Document-1322-1233', position: { x: 800, y: 350 } },
+ { id: '20', label: 'Document-1231-2122', position: { x: 800, y: 400 } },
+ { id: '21', label: 'Document-1223-2133', position: { x: 800, y: 450 } },
+ { id: '22', label: 'Document-1123-2312', position: { x: 800, y: 500 } },
+]);
+const edges = ref([
+ {
+   id: 'e1-2',
+   source: '1',
+   target: '2',
+
+ },
+ {
+   id: 'e2-3',
+   source: '2',
+   target: '3',
+
+ },{
+   id: 'e2-4',
+   source: '2',
+   target: '4',
+
+ },
+ {
+   id: 'e2-5',
+   source: '2',
+   target: '5',
+
+ },
+ {
+   id: 'e3-6',
+   source: '3',
+   target: '6',
+
+ },
+ {
+   id: 'e3-7',
+   source: '3',
+   target: '7',
+
+ },
+ {
+   id: 'e5-8',
+   source: '5',
+   target: '8',
+
+ },
+ {
+   id: 'e5-9',
+   source: '5',
+   target: '9',
+
+ },
+ {
+   id: 'e4-10',
+   source: '4',
+   target: '10',
+
+ },
+ {
+   id: 'e4-11',
+   source: '4',
+   target: '11',
+
+ },
+ {
+   id: 'e4-12',
+   source: '4',
+   target: '12',
+
+ },
+ {
+   id: 'e4-13',
+   source: '4',
+   target: '13',
+
+ },
+ {
+   id: 'e8-14',
+   source: '8',
+   target: '14',
+
+ },
+ {
+   id: 'e8-15',
+   source: '8',
+   target: '15',
+
+ },
+ {
+   id: 'e9-16',
+   source: '9',
+   target: '16',
+
+ },
+ {
+   id: 'e9-17',
+   source: '9',
+   target: '17',
+
+ },
+ {
+   id: 'e9-18',
+   source: '9',
+   target: '18',
+
+ },
+ {
+   id: 'e6-19',
+   source: '6',
+   target: '19',
+
+ },
+ {
+   id: 'e6-20',
+   source: '6',
+   target: '20',
+
+ },
+ {
+   id: 'e7-21',
+   source: '7',
+   target: '21',
+
+ },
+ {
+   id: 'e7-22',
+   source: '7',
+   target: '22',
+
+ },
+])
+</script>
+<style>
+@import '@vue-flow/core/dist/theme-default.css';
+@import '@vue-flow/core/dist/style.css';
+
+</style>

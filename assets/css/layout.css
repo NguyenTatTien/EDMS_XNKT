@@ -1,0 +1,22 @@
+.p-panelmenu .p-menuitem:hover{
+    color: #2c7be5 !important;
+    border: none !important;
+}
+.p-panelmenu .p-menuitem:hover .p-menuitem-content{
+    border: none !important;
+}
+.p-panelmenu .p-menuitem:hover a span{
+    color: #2c7be5 !important;
+    border: none !important;
+}
+.p-panelmenu .p-panelmenu-header-content:hover{
+    color: #2c7be5 !important;
+}.p-panelmenu .p-panelmenu-header-content:hover a span{
+    color: #2c7be5 !important;
+}
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content{
+    background-color: transparent;
+}
+.p-panelmenu .p-panelmenu-content{
+    background-color: transparent;
+}

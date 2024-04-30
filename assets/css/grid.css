@@ -1,0 +1,22 @@
+.p-datatable .p-datatable-tbody > tr > td .calendar-show input {
+    padding: 0 !important;
+    border: none !important;
+}
+.p-datatable .p-datatable-tbody > tr > td input{
+    padding: 0.5rem 0.75rem !important;
+    width: 100% !important;
+}
+.p-datatable .p-cell-editing{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: #EFF6FF !important;
+    border-color: #EFF6FF !important;
+    color: #1D4ED8 !important;
+}
+.p-datatable .p-datatable-thead > tr > th{
+    background-color: #f8fafc;
+    color: #092063;
+}
+
