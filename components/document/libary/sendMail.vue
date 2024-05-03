@@ -1,5 +1,6 @@
 <template>
-    <div class="flex flex-wrap">
+    <div>
+        <div class="flex flex-wrap">
         <div class="w-full flex justify-center items-center mb-2">
             <span class="w-[100px]">To:</span>
             <MultiSelect v-model="selectedUsersTo" :options="users.filter(u=>u.email!='')" filter optionLabel="email" placeholder="Select Cities"
@@ -16,10 +17,13 @@
         </div> 
     </div>
     <div class="mb-2">
-        <Editor v-model="objectMail.body" editorStyle="height: 320px"/>
+        <ClientOnly>
+            <Editor v-model="value" editorStyle="height: 320px"/>
+        </ClientOnly>
     </div>
     <div class="flex justify-end gap-2">
         <Button type="button" label="Send" class="p-2 text-white" @click="onSendMail"></Button>
+    </div>
     </div>
 </template>
 <script setup>
@@ -28,10 +32,10 @@ import {userGetAllAPI} from '../../../api/userAPI';
 import {ObjectMail} from '../../../models/objectMail.js';
 import Editor from 'primevue/editor';
 import {sendMailAPI,getObjcetMailAPI} from '../../../api/mailAPI.js';
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
 const users = ref([]);
 const selectedUsersTo = ref();
 const selectUsersCC = ref();
+const value = ref('<p>sfsfsfsfsfsfsfsfsfsfsfsfsfsafasfasfasfasf</p>');
 const subjectMail = ref("Availability of New/Updated 02. P.Tổ chức nhân sự / ОУП Documents on EDMS System");
 const objectMail = ref(new ObjectMail());
 onMounted(()=>{

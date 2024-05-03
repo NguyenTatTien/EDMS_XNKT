@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <Toast />
-        <FileUpload name="demo[]" url="/api/upload" @upload="onTemplatedUpload($event)" :multiple="true" :maxFileSize="1000000" @select="onSelectedFiles">
+        <FileUpload name="demo[]" url="/api/upload" @upload="onTemplatedUpload($event)" :multiple="true" :maxFileSize="1000000000" @select="onSelectedFiles">
             <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                 <div class="flex flex-wrap justify-between items-center flex-1 gap-2">
                     <div class="flex gap-2">
@@ -16,17 +16,16 @@
                     <h5>Pending</h5>
                     <div class="flex flex-wrap p-0 sm:p-5 gap-5">
                         <div v-for="(file, index) of files" :key="file.name + file.type + file.size" class="card m-0 px-6 flex flex-column border-1 surface-border align-items-center gap-3">
-                            <div>
+                            <!-- <div>
                                 <img role="presentation" :alt="file.name" :src="file.objectURL" width="100" height="50" />
-                            </div>
+                            </div> -->
                             <span class="font-semibold">{{ file.name }}</span>
                             <div>{{ formatSize(file.size) }}</div>
-                            <Badge value="Pending" severity="warning" />
+                            <!-- <Badge value="Pending" severity="warning" /> -->
                             <Button icon="pi pi-times" @click="onRemoveTemplatingFile(file, removeFileCallback, index)" outlined rounded  severity="danger" />
                         </div>
                     </div>
                 </div>
-
                 <div v-if="uploadedFiles.length > 0">
                     <h5>Completed</h5>
                     <div class="flex flex-wrap p-0 sm:p-5 gap-5">

@@ -1,12 +1,11 @@
 <template>
-    <div class="card flex">
+    <div class="card flex border-b">
         <Sidebar v-model:visible="visible">
             <template #container="{ closeCallback }">
                 <div class="flex flex-col h-full">
                     <div class="flex items-center justify-between px-4 pt-3 shrink-0">
                         <span class="inline-flex items-center gap-2">
                             <img src="../../assets/Images/THEA_Logo_vn_Backup.png" alt="logo" height="100" class="mr-2" />
-                           
                         </span>
                         <span>
                             <Button type="button" @click="closeCallback" icon="pi pi-times" rounded outlined class="h-2rem w-2rem"></Button>
@@ -37,7 +36,13 @@
                 </div>
             </template>
         </Sidebar>
-        <Button icon="pi pi-bars" class="p-button-rounded p-button-text" @click="visible = true" />
+        <div class="flex justify-between w-full items-center">
+            <Button icon="pi pi-bars" class="p-button-rounded p-button-text" @click="visible = true" />
+            <div class="px-5 flex items-center">
+                <i class="pi pi-bell mr-5 text-xl" />
+                <div class="flex gap-2 items-center"><img src="../../assets/Images/Resources/3.jpg" alt="demo" class="rounded w-[30px] h-[30px]"><div class="flex flex-col"><span class="font-semibold">Peter Taylor</span><span class="text-sm">Webmaster</span></div></div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -104,6 +109,21 @@ const items = ref([
             },
             {
                 label: 'Groups',
+                icon:'pi pi-users',
+                items: null,
+            },
+            {
+                label: 'Plants',
+                icon:'pi pi-users',
+                items: null,
+            },
+            {
+                label: 'Systems',
+                icon:'pi pi-users',
+                items: null,
+            },
+            {
+                label: 'Standards',
                 icon:'pi pi-users',
                 items: null,
             },

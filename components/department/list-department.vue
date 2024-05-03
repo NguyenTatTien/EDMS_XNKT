@@ -27,7 +27,7 @@
 <script setup>
 import { ref,onMounted } from "vue";
 import {cateogriesGetAllAPI} from '../../api/categoriesAPI.js';
-import {folderGetNotParentByCategory,folderGetByParentAndCategory} from '../../api/folderAPI.js';
+import {folderGetNotParentByCategoryAPI,folderGetByParentAndCategoryAPI} from '../../api/folderAPI.js';
 
 import '../assets/CSS/layout.css'
 const items = ref([
@@ -51,7 +51,7 @@ const loadFolders = async (itemDepartment) => {
  if(itemDepartment.id) {
     try{
          
-         var data = await folderGetNotParentByCategory(itemDepartment.id);
+         var data = await folderGetNotParentByCategoryAPI(itemDepartment.id);
          treeFolders.value = [];
          data.forEach(item => {
             var newitem = {
@@ -69,7 +69,6 @@ const loadFolders = async (itemDepartment) => {
             });
             
          });
-         console.log(treeFolders.value);
          itemDepartment.items[0].treeFolder = treeFolders.value;
          emit('onLoadFolderByDepartment', {folders:data,categoryID:itemDepartment.id});
          
@@ -80,7 +79,7 @@ const loadFolders = async (itemDepartment) => {
 }
 const loadChildFolders = async (node) => {
  try{
-     var data = await folderGetByParentAndCategory(node.key,node.data.categoryID);
+     var data = await folderGetByParentAndCategoryAPI(node.key,node.data.categoryID);
      node.children = [];
      data.forEach(item => {
          var newitem = {

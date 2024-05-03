@@ -1,25 +1,28 @@
 <template>
 
 
-     <Card class="h-[80%] rounded-md" style="box-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);"> 
-        <template #content>
-    <div class="w-full h-full">
+<div class="w-full h-full">
         <DataTable paginator :rows="10" dataKey="id" scrollable filterDisplay="menu" @cell-edit-complete="onCellEditComplete" v-model:selection="selectedUsers"
         :globalFilterFields="['username', 'fullName','role.name','email']" class="text-xs h-[100%]" :value="users" showGridlines stripedRows v-model:filters="filters" editMode="cell">
     <template #header>
         <div class="flex justify-between">
             <div class="flex w-[300px]">
-                <Button icon="pi pi-plus" label="Add New" class="border-[1px] border-solid border-[#3B82F6] text-[#1976d2]" @click="visibleDialog = true" style="padding: 0.65625rem 1.09375rem"/>
+                <!-- <Button icon="pi pi-plus" label="Add New" class="border-[1px] border-solid h-[2.5rem]" @click="visibleDialog = true" style="padding: 0.65625rem 1.09375rem"/> -->
                 <!-- <Button icon="pi pi-plus" label="Add" class="bg-[#3B82F6] text-white px-4" @click="visibleDialog = true"/>
                 <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import" class="inline-block text-[12px]" />
                 <Button label="Export" icon="pi pi-upload" severity="help" class="bg-[#3B82F6] text-white px-4"/> -->
             </div>
+            <div class="flex justify-between items-center">
+            <Button icon="pi pi-plus" class="mr-2 h-[2rem]" @click="visibleDialog = true"/>
+            <Button icon="pi pi-cloud-download" class="mr-2 h-[2rem]"/>
+            <Button icon="pi pi-cloud-upload" class="mr-2 h-[2rem]"/>
             <IconField iconPosition="left">
                 <InputIcon>
                     <i class="pi pi-search" />
                 </InputIcon>
-                <InputText placeholder="Keyword Search" class="py-[0.5rem] px-[0.75rem] pl-[2.5rem]" v-model="filters['global'].value"/>
+                <InputText placeholder="Keyword Search" class="py-[0.5rem] px-[0.75rem] pl-[2.5rem]" v-model="filters['global'].value" style="padding-left: 2rem !important"/>
             </IconField>
+            </div>
         </div>
     </template>
     <template #empty> No found. </template>
@@ -29,7 +32,11 @@
             <img src="/_nuxt/assets/images/delete.png" class="w-[16px] h-[16px] cursor-pointer" @click="deleteUser(data.id)">
         </template>
     </Column> -->
-    <Column selectionMode="multiple" headerStyle="width: 1rem"></Column>
+    <Column header="" style="width: 2rem">
+     <template #body="{  }">
+        <i class="pi pi-times cursor-pointer" style="color: #EF4444;"></i>
+     </template>
+ </Column>
     <Column field="username" header="User Name" style="min-width: 12rem">
         <template #editor="{ data }">
             <InputText v-model="data.username" autofocus />
@@ -64,13 +71,11 @@
         </template>
     </Column>
 </DataTable>
-
-    </div>
-    </template>
-     </Card>
-     <Dialog v-model:visible="visibleDialog" modal header="Create User" :style="{ width: '30rem' }">
+<Dialog v-model:visible="visibleDialog" modal header="Create User" :style="{ width: '30rem' }">
     <UserCreate v-model="visibleDialog" :users="users"/>
 </Dialog>
+    </div>
+
 </template>
 <script setup>
     definePageMeta({

@@ -1,5 +1,5 @@
 <template>
-   <div id="content">
+   <div>
     <div>
         <div class="w-[300px] h-full fixed z-10 left-0 pb-[40px]">
              <!-- <div class="text-center h-15 p-5">
@@ -20,6 +20,10 @@
                 </template>
                 </Breadcrumb>
                 <div class="flex">
+                <IconField iconPosition="left" class="mr-2 h-[2rem]">
+                        <InputIcon class="pi pi-search" @click="onSearch"> </InputIcon>
+                        <InputText v-model="search" placeholder="Search" class="h-[2rem]"/>
+                </IconField>
                 <Button icon="pi pi-plus" class="mr-2 h-[2rem]" @click="toggleAdd" />
                 <Button icon="pi pi-spin pi-cog" class="mr-2 h-[2rem] bg-[#4410b9]" @click="toggleConf" />
                 <SelectButton v-model="value" :options="options" optionLabel="value" dataKey="value" aria-labelledby="custom" class="mr-5">
@@ -41,7 +45,6 @@
             </div>
         </div>
     </div>
-   </div>
     <div id="sidebarEdit" class="sidebarEdit">
         <DocumentLibaryEdit v-if="documentEdit.type === 'document'" @closeNav="closeSidebarRight" :documents="documents" :documentEdit="documentEdit" :parentFolderID="parentFolderID"/>
         <FolderEdit v-else @closeNav="closeSidebarRight" :documents="documents" :documentEdit="documentEdit" :categoryID="categoryID" :parentFolderID="parentFolderID"/>
@@ -62,21 +65,26 @@
     <Dialog v-model:visible="visibleDialogSync" modal header="Sync Folder"  class="w-[80rem] max-h-[45rem]">
         <DocumentLibarySync v-model="visibleDialogSync"/>
     </Dialog>
+    <Toast />
+   </div>
+ 
 </template>
 <script setup>
     definePageMeta({
     layout: 'default'
 })
 import {DocumentView} from '../models/tableView/documentView.js';
-import {folderGetByParentAndCategory,deleteFolderAPI} from '../api/folderAPI.js';
-import {documentGetByFolderAPI,deleteDocumentAPI} from '../api/documentAPI';
-import {copyFileToFolder,moveFileToFolder} from '../api/documentAPI.js';
-import {moveFolderToFolder} from '../api/folderAPI.js';
+import {folderGetByParentAndCategoryAPI,deleteFolderAPI,copyFolderAPI,searchFolderAPI} from '../api/folderAPI.js';
+import {documentGetByFolderAPI,deleteDocumentAPI,searchDocumentAPI} from '../api/documentAPI';
+import {copyFileToFolder,moveFileToFolder,exportDocumentAPI} from '../api/documentAPI.js';
+import {moveFolderToFolderAPI} from '../api/folderAPI.js';
 import {openSidebarRight,closeSidebarRight} from '../../assets/js/sidebar.js';
 import ListDepartment from '~/components/department/list-department.vue';
 import {Folder} from '../../models/folder.js';
 import {Document} from '../../models/document.js';
 import '../../assets/css/sidebar.css';
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const documents = ref([]);
 const visibleDialogUpload = ref(false);
 const visibleDialogCreateDoc = ref(false);
@@ -93,6 +101,7 @@ const documentCopyOrMove = ref({});
 const documentEdit = ref({type:'',object:{}});
 const categoryID = ref(null);
 const parentFolderID = ref(null);
+const search = ref("");
 const loadFolderByDepartment = (data) => {
         try{
         documents.value = [];
@@ -142,14 +151,14 @@ const loadFolderByDepartment = (data) => {
             var data = selectedDocuments.value;
             if(data.type=="folder"){
                 var a = document.createElement('A');
-                a.href = '_nuxt/assets/Import/download.rar';
+                a.href = '_nuxt/assets/Export/download.rar';
                 a.download = 'download.rar';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
             }else{
                 var a = document.createElement('A');
-                a.href = '_nuxt/assets/Import/file.pdf';
+                a.href = '_nuxt/assets/Export/file.pdf';
                 a.download = 'file.pdf';
                 document.body.appendChild(a);
                 a.click();
@@ -239,14 +248,14 @@ const fileMenus = ref([
             var data = selectedDocuments.value;
             if(data.type=="folder"){
                 var a = document.createElement('A');
-                a.href = '_nuxt/assets/Import/download.rar';
+                a.href = '_nuxt/assets/Export/download.rar';
                 a.download = 'download.rar';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
             }else{
                 var a = document.createElement('A');
-                a.href = '_nuxt/assets/Import/file.pdf';
+                a.href = '_nuxt/assets/Export/file.pdf';
                 a.download = 'file.pdf';
                 document.body.appendChild(a);
                 a.click();
@@ -283,6 +292,7 @@ const fileMenus = ref([
         icon: 'pi pi-clone',
         command: () => {
             pasteDocument();
+            
         }
     },
 ]);
@@ -316,17 +326,7 @@ const itemAddMenus = ref([
         separator: true
     },
     {
-        label: 'Upload Folder',
-        icon: 'pi pi-upload',
-        command: () => {
-            visibleDialogUpload.value = true;
-        }
-    },
-    {
-        separator: true
-    },
-    {
-        label: 'Upload Document',
+        label: 'Upload',
         icon: 'pi pi-upload',
         command: () => {
             visibleDialogUpload.value = true;
@@ -358,7 +358,12 @@ const itemConfMenus = ref([
         label: 'Export data',
         icon: 'pi pi-file-export',
         command: () => {
-            
+            var a = document.createElement('A');
+                a.href = '_nuxt/assets/Export/exportDocument.xls';
+                a.download = 'exportDocument.xls';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
         }
     },
     {
@@ -379,7 +384,12 @@ const itemConfMenus = ref([
         label: 'Download multi documents',
         icon: 'pi pi-download',
         command: () => {
-            
+                var a = document.createElement('A');
+                a.href = '_nuxt/assets/Export/download.rar';
+                a.download = 'download.rar';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
         }
     },
     {
@@ -389,7 +399,12 @@ const itemConfMenus = ref([
         label: 'Export tree folder',
         icon: 'pi pi-file-export',
         command: () => {
-            
+            var a = document.createElement('A');
+                a.href = '_nuxt/assets/Export/ExportTreeFolder.xls';
+                a.download = '02-05-2024.xls';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
         }
         
     },
@@ -399,10 +414,24 @@ const itemConfMenus = ref([
     {
         label: 'Export document',
         icon: 'pi pi-file-export',
-        command: () => {
+        command:async () => {
             
+            if(breadcrumbItems.value && breadcrumbItems.value.length>0){
+                var obj = breadcrumbItems.value[breadcrumbItems.value.length-1].data.object;
+                console.log(obj.id);
+                var data = await exportDocumentAPI(obj.id);
+                const blob = new Blob([data], { type: 'application/octet-stream' });
+                const url = window.URL.createObjectURL(blob);
+                console.log(data);
+                var a = document.createElement('A');
+                a.href = url;
+                a.download = '02-05-2024.xls';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+          
         }
-        
     },
 ]);
 const home = ref({ icon: 'pi pi-home' });
@@ -417,7 +446,6 @@ const toggle = (data) => {
     }else{
         menuFile.value.toggle(data.event);
     }
-    
     selectedDocuments.value = data.data;
   
 };
@@ -447,7 +475,7 @@ const backBreadcrumbItems = (value)=>{
 }
 const openDocument = async (data) => {
     if(data.type=="folder"){
-        var folders = await folderGetByParentAndCategory(data.object.id,data.object.categoryID);
+        var folders = await folderGetByParentAndCategoryAPI(data.object.id,data.object.categoryID);
     var files = await documentGetByFolderAPI(data.object.id);
     documents.value = [];
     if(folders.length > 0){
@@ -476,16 +504,19 @@ const pasteDocument = async () => {
             if(documentCopyOrMove.value.type=="copy"){
             if(documentCopyOrMove.value.document.type=="folder"){
                 
+                await copyFolderAPI(documentCopyOrMove.value.document.object.id,selectedDocuments.value.object.id);
             }else{
-                await copyFileToFolder(documentCopyOrMove.value.document.id,selectedDocuments.value.id);
+                await copyFileToFolder(documentCopyOrMove.value.document.object.id,selectedDocuments.value.object.id);
             }
+            toast.add({ severity: 'success', summary: 'Copy successfully!', detail: 'Success', life: 5000 });
         }
         else{
             if(documentCopyOrMove.value.document.type=="folder"){
-                await moveFolderToFolder(documentCopyOrMove.value.document.id,selectedDocuments.value.id);
+                await moveFolderToFolderAPI(documentCopyOrMove.value.document.object.id,selectedDocuments.value.object.id);
             }else{
-                await moveFileToFolder(documentCopyOrMove.value.document.id,selectedDocuments.value.id);
+                await moveFileToFolder(documentCopyOrMove.value.document.object.id,selectedDocuments.value.object.id);
             }
+            toast.add({ severity: 'success', summary: 'Move successfully!', detail: 'Success', life: 5000 });
         }
     }catch(err){
         console.log(err);
@@ -502,6 +533,7 @@ const deleteFolder = async (Id) =>{
     try{
         await deleteFolderAPI(Id);
         documents.value = documents.value.filter(item => item !== selectedDocuments.value);
+         toast.add({ severity: 'success', summary: 'Deleted successfull!', detail: 'Success', life: 5000 });
     }catch(error){
         console.log(error);
     }
@@ -510,14 +542,32 @@ const deleteDocument = async (Id) =>{
     try{
         await deleteDocumentAPI(Id);
         documents.value = documents.value.filter(item => item !== selectedDocuments.value);
+        toast.add({ severity: 'success', summary: 'Deleted successfull!', detail: 'Success', life: 5000 });
     }catch(error){
         console.log(error);
     }
+}
+const onSearch = async () => {
+    documents.value = [];
+    var folders = await searchFolderAPI(search.value);
+    var files = await searchDocumentAPI(search.value);
+    folders.forEach(item => {
+        var document = {};
+        document.type = "folder";
+        document.object = item;
+        documents.value.push(document);
+    });
+    files.forEach(item => {
+        var document = {};
+        document.type = "document";
+        document.object = item;
+        documents.value.push(document);
+    });
+    breadcrumbItems.value = [];
 }
 </script>
 <style>
 .p-tabview-nav-container{
     display: none;
 }
-
 </style>

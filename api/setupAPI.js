@@ -22,11 +22,13 @@ export const urlDocumentGetByFolder = api_base_url+"/api/Document/getAllByFolder
 export const urlDocumentGetByType = api_base_url+"/api/Document/getAllByType";
 export const urlCopyFileToFolder = api_base_url+"/api/Document/copyFileToFolder";
 export const urlMoveFileToFolder = api_base_url+"/api/Document/moveFileToFolder";
-export const urlGetDocumentByTab = api_base_url+"/api/Document/getDoucumentByTab";
-export const urlGetDocumentByTabAndType = api_base_url+"/api/Document/getDocumentByTabAndType";
+export const urlGetDocumentByTag = api_base_url+"/api/Document/getDoucumentByTag";
+export const urlGetDocumentByTagAndType = api_base_url+"/api/Document/getDocumentByTagAndType";
 export const urlCreateDocument = api_base_url+"/api/Document/create";
 export const urlUpdateDocument = api_base_url+"/api/Document/update";
 export const urlDeleteDocument = api_base_url+"/api/Document/delete";
+export const urlExportDocument = api_base_url+"/api/Document/exportData";
+export const urlSearchDocument = api_base_url+"/api/Document/search";
 //user
 export const urlUserGetAll = api_base_url+"/api/User/getAll";
 export const urlUpdateUser = api_base_url+"/api/User/update";
@@ -41,8 +43,13 @@ export const urlMoveFolderToFolder = api_base_url+"/api/Folder/moveFolderToFolde
 export const urlCretateFolder = api_base_url+"/api/Folder/create";
 export const urlUpdateFolder = api_base_url+"/api/Folder/update";
 export const urlDeleteFolder = api_base_url+"/api/Folder/delete";
+export const urlCopyFolder = api_base_url+"/api/Folder/copyFolder";
+export const urlSearchFolder = api_base_url+"/api/Folder/search";
 // Tab
-export const urlTabGetAll = api_base_url+"/api/Tab/getAll";
+export const urlTagGetAll = api_base_url+"/api/Tag/getAll";
+export const urlCreateTag = api_base_url+"/api/Tag/create";
+export const urlUpdateTag = api_base_url+"/api/Tag/update";
+export const urlDeleteTag = api_base_url+"/api/Tag/delete";
 //disciplines
 export const urlDisciplinesGetAll = api_base_url+"/api/Disciplines/getAll";
 //permission folder
@@ -57,6 +64,7 @@ export const urlSendMail = api_base_url+"/api/Mail/SendMail";
 export const urlgetObjcetMail = api_base_url+"/api/Mail/getObjectMail";
 //document type
 export const urlDocumentTypeGetAll = api_base_url+"/api/DocumentType/getAll";
+export const urlDocumentTypeByParent = api_base_url+"/api/DocumentType/getDocumentTypeByParent";
 //plant
 export const urlPlantGetAll = api_base_url+"/api/Plant/getAll";
 //syncfolder

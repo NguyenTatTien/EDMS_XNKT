@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="content">
       <!-- <section class="flex items-center w-full shadow-md py-2">
         <div class="flex-grow px-2">
           <ClientOnly>
@@ -18,7 +18,6 @@
       </ClientOnly>
     </div>
   </template>
-  
   <style>
   .p-breadcrumb {
     background: #ffffff;

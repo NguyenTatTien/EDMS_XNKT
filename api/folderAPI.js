@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {urlFolderGetNotParentByCategory,urlFolderGetByParentAndCategory,urlMoveFolderToFolder,urlCretateFolder,urlUpdateFolder,urlDeleteFolder} from './setupAPI.js'
-export const folderGetNotParentByCategory = async (categoryId) => {
+import {urlFolderGetNotParentByCategory,urlFolderGetByParentAndCategory,urlMoveFolderToFolder,urlCretateFolder,urlUpdateFolder,urlDeleteFolder,urlCopyFolder,urlSearchFolder} from './setupAPI.js'
+export const folderGetNotParentByCategoryAPI = async (categoryId) => {
     try {
       const response = await axios.get(`${urlFolderGetNotParentByCategory}?categoryId=${categoryId}`, {
           headers: {
@@ -13,7 +13,7 @@ export const folderGetNotParentByCategory = async (categoryId) => {
       // Handle network or other errors
     }
   };
-  export const folderGetByParentAndCategory = async (parentId,categoryId) => {
+  export const folderGetByParentAndCategoryAPI = async (parentId,categoryId) => {
     try {
       const response = await axios.get(`${urlFolderGetByParentAndCategory}?parentId=${parentId}&categoryId=${categoryId}`, {
           headers: {
@@ -26,7 +26,7 @@ export const folderGetNotParentByCategory = async (categoryId) => {
       // Handle network or other errors
     }
   };
-  export const moveFolderToFolder = async (folderMoveId,folderPasteId) => {
+  export const moveFolderToFolderAPI = async (folderMoveId,folderPasteId) => {
     try {
       const response = await axios.post(`${urlMoveFolderToFolder}?folderMoveId=${folderMoveId}&folderPasteId=${folderPasteId}`, {
           headers: {
@@ -68,6 +68,32 @@ export const folderGetNotParentByCategory = async (categoryId) => {
   export const deleteFolderAPI = async (id) => {
     try {
       const response = await axios.delete(`${urlDeleteFolder}?Id=${id}`, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  }
+  export const copyFolderAPI = async (folderCopyID,folderPasteID) => {
+    try {
+      const response = await axios.post(`${urlCopyFolder}?folderCopyID=${folderCopyID}&folderPasteID=${folderPasteID}`, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  }
+  export const searchFolderAPI = async (search) => {
+    try {
+      const response = await axios.get(`${urlSearchFolder}?search=${search}`, {
           headers: {
               'Content-Type': 'application/json',
           },

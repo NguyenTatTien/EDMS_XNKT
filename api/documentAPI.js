@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {urlDocumentGetAll,urlDocumentGetByFolder,urlDocumentGetByType,urlCopyFileToFolder,urlMoveFileToFolder,urlGetDocumentByTab,urlGetDocumentByTabAndType,urlCreateDocument,urlUpdateDocument,urlDeleteDocument} from './setupAPI.js'
+import {urlDocumentGetAll,urlDocumentGetByFolder,urlDocumentGetByType,urlCopyFileToFolder,urlMoveFileToFolder,urlGetDocumentByTag,urlGetDocumentByTagAndType,urlCreateDocument,urlUpdateDocument,urlDeleteDocument,urlExportDocument,urlSearchDocument} from './setupAPI.js'
 export const documentGetAllAPI = async () => {
      
     try {
@@ -68,9 +68,9 @@ export const moveFileToFolder = async (fileId, folderId) => {
     // Handle network or other errors
   }
 }
-export const getDocumentByTabAPI = async (tabId) => {
+export const getDocumentByTagAPI = async (tagId) => {
   try {
-    const response = await axios.get(`${urlGetDocumentByTab}?tabId=${tabId}`, {
+    const response = await axios.get(`${urlGetDocumentByTag}?tabId=${tagId}`, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -81,9 +81,9 @@ export const getDocumentByTabAPI = async (tabId) => {
     // Handle network or other errors
   }
 }
-export const getDocumentByTabAndTypeAPI = async (tabId, typeId) => {
+export const getDocumentByTagAndTypeAPI = async (tagId, typeId) => {
   try {
-    const response = await axios.get(`${urlGetDocumentByTabAndType}?tabId=${tabId}&typeId=${typeId}`, {
+    const response = await axios.get(`${urlGetDocumentByTagAndType}?tagId=${tagId}&typeId=${typeId}`, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -133,3 +133,30 @@ export const deleteDocumentAPI = async (Id) => {
     // Handle network or other errors
   }
 }
+export const exportDocumentAPI = async (folderID) => {
+  try {
+    const response = await axios.post(`${urlExportDocument}?folderID=${folderID}`, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    return await response.data;
+  } catch (error) {
+    throw error;
+    // Handle network or other errors
+  }
+}
+export const searchDocumentAPI = async (search) => {
+  try {
+    const response = await axios.get(`${urlSearchDocument}?search=${search}`, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    return await response.data;
+  } catch (error) {
+    throw error;
+    // Handle network or other errors
+  }
+}
+

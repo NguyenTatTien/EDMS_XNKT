@@ -6,7 +6,7 @@
     <template #header>
         <div class="flex justify-between">
             <div class="flex w-[300px]">
-                <Button icon="pi pi-plus" label="Add New" class="border-[1px] border-solid border-[#3B82F6] text-[#1976d2]" @click="visibleDialog = true" style="padding: 0.65625rem 1.09375rem"/>
+                
             </div>
             <IconField iconPosition="left">
                 <InputIcon>
@@ -102,7 +102,7 @@
     import '../../../assets/CSS/styleMain.css';
     import {documentGetByTypeAPI } from '~/api/documentAPI';
     import {FilterMatchMode} from 'primevue/api';
-    import {tabGetAllAPI} from '../../../api/tabAPI';
+    import {tabGetAllAPI} from '../../../api/tagAPI';
     import {documentTypeGetAllAPI} from '../../../api/documentTypeAPI';
     import {disciplinesGetAllAPI} from '../../../api/disciplinesAPI';
     import { ref, onMounted } from 'vue';

@@ -1,4 +1,4 @@
-export class Tab{
+export class Tag{
     constructor(){
         this.id= 0,
         this.name= "",

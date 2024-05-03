@@ -8,12 +8,12 @@
     border-left: 1px solid #ccc;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     
   }
   #content {
     transition: margin-right .5s;
-    padding: 16px;
   }
   @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
