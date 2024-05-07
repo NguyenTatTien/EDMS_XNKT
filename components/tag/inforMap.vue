@@ -1,11 +1,16 @@
 <template>
     <VueFlow
  :nodes="nodes" :edges="edges"
- class=".vue-flow__node-custom" 
-/>
+ class=".vue-flow__node-custom" />
+ <!-- <div>
+  <div id="map"></div>
+ </div> -->
 </template>
 <script setup>
-import { VueFlow } from '@vue-flow/core'
+import { VueFlow, } from '@vue-flow/core';
+// import MindElixir from "mind-elixir";
+// import example from "mind-elixir/example";
+import { ref, onMounted } from 'vue';
 const nodes = ref([
  {
    id: '1',
@@ -20,55 +25,49 @@ const nodes = ref([
  { id: '7', label: 'DataSheet', position: { x: 350, y: 550 } },
  { id: '8', label: 'ISO', position: { x: 500, y: 0 } },
  { id: '9', label: 'TCVN', position: { x: 500, y: 100 } },
- { id: '10', label: 'Document-001', position: { x: 500, y: 200 } },
- { id: '11', label: 'Document-002', position: { x: 500, y: 250 } },
- { id: '12', label: 'Document-003', position: { x: 500, y: 300 } },
- { id: '13', label: 'Document-004', position: { x: 500, y: 350 } },
- { id: '14', label: 'ISO-1234', position: { x: 800, y: -50 } },
- { id: '15', label: 'ISO-4567', position: { x: 800, y: 0 } },
- { id: '16', label: 'TCVN-4567-2333', position: { x: 800, y: 100 } },
- { id: '17', label: 'TCVN-1322-1233', position: { x: 800, y: 150 } },
- { id: '18', label: 'TCVN-1322-1233', position: { x: 800, y: 200 } },
- { id: '19', label: 'Document-1322-1233', position: { x: 800, y: 350 } },
- { id: '20', label: 'Document-1231-2122', position: { x: 800, y: 400 } },
- { id: '21', label: 'Document-1223-2133', position: { x: 800, y: 450 } },
- { id: '22', label: 'Document-1123-2312', position: { x: 800, y: 500 } },
+ { id: '10', label: 'VSP01-E-123-CONNECTION DIAGRAM OF JUNCTION BOX.PDF', position: { x: 500, y: 200 } },
+ { id: '11', label: 'VSP01-E-116-ARRANGEMENT OF ANTENNA.PDF', position: { x: 500, y: 250 } },
+ { id: '12', label: 'VSP01-E-123-CONNECTION DIAGRAM OF JUNCTION BOX.PDF', position: { x: 500, y: 300 } },
+ { id: '13', label: 'VSP01-E-124-CONNECTION DIAGRAM OF ELECTRICAL POWER SYSTEM.PDF', position: { x: 500, y: 350 } },
+ { id: '14', label: 'VSP01-E-201-1-INSTRUCTION.PDF', position: { x: 800, y: -50 } },
+ { id: '15', label: 'VSP01-E-200-2-TEST REPORT.PDF', position: { x: 800, y: 0 } },
+ { id: '16', label: 'VSP01-E-200-1-INSTRUCTION.PDF', position: { x: 800, y: 100 } },
+ { id: '17', label: 'VSP01-E-200-2-TEST REPORT.PDF', position: { x: 800, y: 150 } },
+ { id: '18', label: 'VSP01-E-200-DIESEL GENERATOR.PDF', position: { x: 800, y: 200 } },
+ { id: '19', label: 'VSP01-E-212-MAIN CONTROL CONSOLE & MONITORING SYSTEM.PDF', position: { x: 800, y: 350 } },
+ { id: '20', label: 'VSP01-E-201-1-INSTRUCTION.PDF', position: { x: 800, y: 400 } },
+ { id: '21', label: 'VSP01-E-202-2-TEST REPORT.PDF', position: { x: 800, y: 450 } },
+ { id: '22', label: 'VSP01-E-211-GAS DETECTION AND ALARM (OUT LINE, INSTRUCTION, TEST REPORT).PDF', position: { x: 800, y: 500 } },
 ]);
 const edges = ref([
  {
    id: 'e1-2',
    source: '1',
    target: '2',
-
  },
  {
    id: 'e2-3',
    source: '2',
    target: '3',
-
  },{
    id: 'e2-4',
    source: '2',
    target: '4',
-
  },
  {
    id: 'e2-5',
    source: '2',
    target: '5',
-
  },
  {
    id: 'e3-6',
    source: '3',
    target: '6',
-
  },
  {
    id: 'e3-7',
    source: '3',
    target: '7',
-
  },
  {
    id: 'e5-8',
@@ -160,7 +159,15 @@ const edges = ref([
    target: '22',
 
  },
-])
+]);
+const me = ref();
+onMounted(() => {
+  // me.value = new MindElixir({
+  //   el: "#map",
+  //   direction: MindElixir.LEFT,
+  // });
+  // me.value.init(example);
+});
 </script>
 <style>
 @import '@vue-flow/core/dist/theme-default.css';

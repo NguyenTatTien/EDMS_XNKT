@@ -51,6 +51,22 @@
                         <a-select-option v-for="item in ban" :key="item.id" :value="item.id">{{ item.name }}</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="Loai">
+                    <a-select
+                        ref="select"
+                        v-model:value="model.type"
+                        style="width: 100%"
+                        >
+                        <a-select-option v-for="item in 2" :key="item" :value="item">
+                          <span v-if="item == 1">
+                            Dự án trong kế hoạch
+                          </span>
+                          <span v-if="item == 2">
+                            Dự án phát sinh
+                          </span>
+                        </a-select-option>
+                    </a-select>
+                </a-form-item>
                 <a-button @click="save()" type="primary">Lưu</a-button>
             </a-form>
         </div>
@@ -88,6 +104,8 @@
         banID: 0,
         userID: 0,
         type: 0,
+        dateStart: new Date(),
+        dateEnd: new Date(),
         details: [
             {
                 name: "Cong viec 1",

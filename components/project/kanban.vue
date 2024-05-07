@@ -56,7 +56,6 @@
         </draggable>
       </div>
     </div>
-
     <div class="flex justify-between">
       <rawDisplays class="w-64 mr-1" :value="list1" />
       <rawDisplays class="w-64" :value="list2" />
@@ -72,7 +71,6 @@ export default defineComponent({
   name: 'App',
   components: {
     draggable: VueDraggableNext,
-
     rawDisplays,
   },
   data() {

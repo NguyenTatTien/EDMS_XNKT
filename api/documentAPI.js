@@ -70,7 +70,7 @@ export const moveFileToFolder = async (fileId, folderId) => {
 }
 export const getDocumentByTagAPI = async (tagId) => {
   try {
-    const response = await axios.get(`${urlGetDocumentByTag}?tabId=${tagId}`, {
+    const response = await axios.get(`${urlGetDocumentByTag}?tagId=${tagId}`, {
         headers: {
             'Content-Type': 'application/json',
         },

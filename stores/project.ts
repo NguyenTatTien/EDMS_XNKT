@@ -13,6 +13,8 @@ export const useProject = defineStore('project', {
                 phongID: 0,
                 banID: 0,
                 userID: 0,
+                dateStart: new Date(),
+                dateEnd: new Date(),
                 type: 0,
                 status: 0,
                 details: [

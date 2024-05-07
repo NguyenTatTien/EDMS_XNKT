@@ -6,7 +6,7 @@
                     <NuxtLink :to="`/project/${record.id}`">{{ record.name }}</NuxtLink>
                 </template>
                 <template v-if="column.key === 'khoi'">
-                    {{ khoi.filter(p=> p.id == record.khoiID)[0].name }}
+                    <!-- {{ khoi.filter(p=> p.id == record.khoiID)[0].name }} -->
                 </template>
                 <template v-if="column.key === 'phong'">
                     {{ phong.filter(p=> p.id == record.phongID)[0].name }}
@@ -43,7 +43,7 @@ const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', fixed: false, width: 60 },
     { title: 'Tên dự án', dataIndex: 'name', key: 'name', fixed: true, width:120 },
     { title: 'Mô tả', dataIndex: 'description', key: 'description', fixed: false, width: 220 },
-    { title: 'Khối', dataIndex: 'khoiID', key: 'khoi', fixed: false },
+    // { title: 'Khối', dataIndex: 'khoiID', key: 'khoi', fixed: false },
     { title: 'Ban', dataIndex: 'banID', key: 'ban', fixed: false },
     { title: 'Phòng', dataIndex: 'phongID', key: 'phong', fixed: false },
     { title: 'Trạng thái', dataIndex: 'status', key: 'status', fixed: false },

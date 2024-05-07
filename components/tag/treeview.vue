@@ -2,7 +2,7 @@
      <div class="px-2 mb-10"><i class="pi pi-times cursor-pointer text-[1.4rem]" @click="closeSidebarRight"></i></div>  
     <div class="px-2">
         <Button label="Infor Map" icon="pi pi-map flex px-2" outlined  @click="visibleInforMap = true"/>
-        <PanelMenu :model="items" multiple>
+        <PanelMenu v-model:expandedKeys="expandedKeys" :model="items" multiple>
             <template #item="{ item }">
                 <a v-ripple class="flex align-items-center py-2 cursor-pointer">
                     
@@ -15,8 +15,8 @@
  </template>
         </PanelMenu>
     </div>
-    <Dialog v-model:visible="visibleInforMap" modal header="Infor Map" :style="{ width: '100rem' , height: '100rem' }">
-    <TabInforMap/>
+    <Dialog v-model:visible="visibleInforMap" modal header="Infor Map" class="w-full h-full">
+    <TagInforMap/>
 </Dialog>
 </template>
 <script setup>
@@ -25,8 +25,27 @@ import { closeSidebarRight } from '../../assets/js/sidebar.js';
 const emit = defineEmits(['treeTag']);
 const props = defineProps(['treeTag']);
 const visibleInforMap = ref(false);
+const expandedKeys = ref({});
 const items = ref(props.treeTag);
 watch(() => props.treeTag, (newValue) => {
     items.value = newValue;
+    expandAll();
 });
+const expandAll = () => {
+    for (let node of items.value) {
+        expandNode(node);
+    }
+
+    expandedKeys.value = {...expandedKeys.value};
+};
+
+const expandNode = (node) => {
+    if (node.items && node.items.length) {
+        expandedKeys.value[node.key] = true;
+
+        for (let child of node.items) {
+            expandNode(child);
+        }
+    }
+};
 </script>

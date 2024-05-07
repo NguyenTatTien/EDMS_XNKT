@@ -2,7 +2,7 @@
 
     <div class="w-full flex h-full" style="border-right: 1px solid #dee2e6;">
      <div class="flex w-[100%] h-full">
-         <PanelMenu :model="items" class="w-full md:w-20rem h-full overflow-y-auto px-0" id="categoryDoc">
+         <PanelMenu v-model:expandedKeys="expandedKeys" :model="items" class="w-full md:w-20rem h-full overflow-y-auto px-0" id="categoryDoc">
              <template #item="{ item }">
                  <a v-if="!item.treeFolder" v-ripple class="flex items-center cursor-pointer px-3 py-2 bg-transparent" :target="item.target">
                      <span class="ml-2 text-[#5e6e82] font-medium text-sm" v-if="item.items != null && item.items.length > 0 && !item.items[0].treeFolder">{{ item.label }}</span>
@@ -42,8 +42,10 @@ const expandedKeys = ref({});
 const menu = ref();
 const treeFolders = ref([]);
 const selectedKeyNode = ref(null);
+
 onMounted(() => {
  getCategories();
+ expandedKeys.value[0] = true;
 })
 
 const loadFolders = async (itemDepartment) => {
@@ -71,6 +73,7 @@ const loadFolders = async (itemDepartment) => {
          });
          itemDepartment.items[0].treeFolder = treeFolders.value;
          emit('onLoadFolderByDepartment', {folders:data,categoryID:itemDepartment.id});
+        
          
     }catch(error){
         console.log(error);
@@ -103,10 +106,11 @@ const getCategories = async () => {
      const data = await cateogriesGetAllAPI();
      data.forEach(item => {
          var newitem = {
-             id: item.id,
+             id:  item.id,
+             key: '' +item.id,
              label: item.name,
              icon: "pi pi-graduation-cap",
-             items: [{treeFolder:{}}],
+             items: [{key:item.id+"_"+1,label:item.name+"_"+1,treeFolder:{}}],
          };
          items.value[0].items.push(newitem);
      });

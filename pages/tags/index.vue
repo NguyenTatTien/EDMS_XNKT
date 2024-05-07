@@ -81,7 +81,7 @@
      </template>
  </Column>
 </DataTable>
-<div id="sidebarEdit" class="sidebarEdit"><TagTreeview :treeTag="treeTag"/></div>
+<div id="sidebarEdit" class="sidebarEdit"><ClientOnly><TagTreeview :treeTag="treeTag"/></ClientOnly></div>
  <Dialog v-model:visible="visibleDialog" modal header="Create Tag" :style="{ width: '30rem' }">
  <TagCreate v-model="visibleDialog" :tags="tags"/>
 </Dialog>
@@ -189,21 +189,25 @@ const deleteModel = async (id) => {
 const onOpenTag = async (data) => {
     var menu = [
     {
+        key:'0',
         label: data.plantName,
         icon: 'pi pi-graduation-cap',
         items: [
             {
+                key:'0_1',
                 label: data.name,
                 icon: 'pi pi-graduation-cap',
                 type: '',
                 items: [
                     {
+                        key:'0_2',
                         label: 'Design Document',
                         icon: 'pi pi-file',
                         type: '',
                         items:null
                     },
                     {
+                        key:'0_3',
                         label: 'Vendor Document',
                         icon: 'pi pi-file',
                         type: '',
@@ -211,6 +215,7 @@ const onOpenTag = async (data) => {
                     },
                     
                     {
+                        key:'0_4',
                         label: 'O&M Document',
                         icon: 'pi pi-file',
                         type: '',
@@ -235,6 +240,7 @@ const getDocumentByTag = async (id,items) =>{
             documents.value.filter(p => p.documentTypeID == 1).forEach(element => {
           
             items[0].items[0].items[0].items.push({
+                key:''+element.id,
                 label: element.name,
                 icon: element.fileExtensionIcon,
                 type:"document",

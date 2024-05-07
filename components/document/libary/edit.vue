@@ -34,14 +34,14 @@
         <label class="font-semibold w-[6rem]">Standard</label>
         <Dropdown  v-if="documentEdit != null" v-model="selectStandard" :options="standards" optionLabel="name" placeholder="Select standard" class="flex-auto border-[#cbd5e1] border border-solid text-ellipsis w-[200px]" />
     </div>
-    <div class="flex items-center gap-3 mb-3">
+    <!-- <div class="flex items-center gap-3 mb-3">
         <label class="font-semibold w-[6rem]">Contractor</label>
         <InputText  v-if="documentEdit != null" v-model="documentEdit.object.contractor" id="fullName" class="flex-auto border-[#cbd5e1] border border-solid" autocomplete="off" />
     </div>
     <div class="flex items-center gap-3 mb-3">
         <label class="font-semibold w-[6rem]">Form To</label>
         <InputText  v-if="documentEdit != null" v-model="documentEdit.object.fromTo" id="fullName" class="flex-auto border-[#cbd5e1] border border-solid" autocomplete="off" />
-    </div>
+    </div> -->
     <div class="flex items-center gap-3 mb-3">
         <FileUpload name="demo[]" :multiple="false" :maxFileSize="1000000" class="w-full" @select="document_onSelect">
             <template #empty>
@@ -188,7 +188,6 @@ const insertDocument = async () => {
        console.log(error);
    }
 }
-
 const updateDocument = async () => {
    try{
         await updateDocumentAPI(documentEdit.value.object);

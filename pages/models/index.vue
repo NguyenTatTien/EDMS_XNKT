@@ -1,7 +1,7 @@
 <template>
    <div class="w-full h-full">
         <DataTable paginator :rows="10" dataKey="id" scrollable filterDisplay="menu" v-model:selection="selectedManufacturers"
-        :globalFilterFields="['name', 'description']" class="text-xs h-[100%]" showGridlines stripedRows v-model:filters="filters" editMode="cell" :value="manufacturers" @cell-edit-complete="onCellEditComplete">
+        :globalFilterFields="['name', 'description']" class="text-xs h-[100%]" showGridlines stripedRows v-model:filters="filters" editMode="cell" :value="models" @cell-edit-complete="onCellEditComplete">
     <template #header>
         <div class="flex justify-between">
             <div class="flex w-[300px]">

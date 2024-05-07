@@ -2,9 +2,6 @@
    <div>
     <div>
         <div class="w-[300px] h-full fixed z-10 left-0 pb-[40px]">
-             <!-- <div class="text-center h-15 p-5">
-                <Button icon="pi pi-plus" label="Add New" class="border-[1px] border-solid border-[#3B82F6] text-[#1976d2]" @click="visibleDialog = true" style="padding: 0.65625rem 1.09375rem"/>
-             </div> -->
             <ListDepartment @onLoadFolderByDepartment="loadFolderByDepartment" @pushBreadcrumbItems="pushBreadcrumbItems" />
         </div>
     </div>
@@ -87,7 +84,6 @@ import { useToast } from "primevue/usetoast";
 const toast = useToast();
 const documents = ref([]);
 const visibleDialogUpload = ref(false);
-const visibleDialogCreateDoc = ref(false);
 const visibleDialogPermission = ref(false);
 const visibleDialogSendMail = ref(false);
 const visibleDialogSync = ref(false);
@@ -373,9 +369,7 @@ const itemConfMenus = ref([
         label: 'Import data',
         icon: 'pi pi-file-import',
         command: () => {
-            
         }
-        
     },
     {
         separator: true
@@ -400,11 +394,11 @@ const itemConfMenus = ref([
         icon: 'pi pi-file-export',
         command: () => {
             var a = document.createElement('A');
-                a.href = '_nuxt/assets/Export/ExportTreeFolder.xls';
-                a.download = '02-05-2024.xls';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+            a.href = '_nuxt/assets/Export/ExportTreeFolder.xls';
+            a.download = '02-05-2024.xls';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
         
     },
@@ -417,15 +411,15 @@ const itemConfMenus = ref([
         command:async () => {
             
             if(breadcrumbItems.value && breadcrumbItems.value.length>0){
-                var obj = breadcrumbItems.value[breadcrumbItems.value.length-1].data.object;
-                console.log(obj.id);
-                var data = await exportDocumentAPI(obj.id);
-                const blob = new Blob([data], { type: 'application/octet-stream' });
-                const url = window.URL.createObjectURL(blob);
-                console.log(data);
+                // var obj = breadcrumbItems.value[breadcrumbItems.value.length-1].data.object;
+                // console.log(obj.id);
+                // var data = await exportDocumentAPI(obj.id);
+                // const blob = new Blob([data], { type: 'application/octet-stream' });
+                // const url = window.URL.createObjectURL(blob);
+                // console.log(data);
                 var a = document.createElement('A');
-                a.href = url;
-                a.download = '02-05-2024.xls';
+                a.href = '_nuxt/assets/Export/03-05-2024.xls';
+                a.download = '03-05-2024.xls';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -565,6 +559,7 @@ const onSearch = async () => {
     });
     breadcrumbItems.value = [];
 }
+
 </script>
 <style>
 .p-tabview-nav-container{

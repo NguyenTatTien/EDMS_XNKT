@@ -108,7 +108,7 @@
 </template>
 <script setup>
     definePageMeta({
-    layout: 'system'
+    layout: 'default'
     })
     import '../../../assets/CSS/grid.css';
     import '../../../assets/CSS/styleMain.css';
@@ -116,7 +116,7 @@
     import {modelGetAllAPI} from "~/api/modelAPI";
     import {FilterMatchMode} from 'primevue/api';
     import { ref, onMounted } from 'vue';
-    import {tabGetAllAPI} from '../../../api/tagAPI';
+    import {tagGetAllAPI} from '../../../api/tagAPI';
     import {documentTypeGetAllAPI} from '../../../api/documentTypeAPI';
     import {disciplinesGetAllAPI} from '../../../api/disciplinesAPI';
     const documents = ref([]);
