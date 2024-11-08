@@ -1,7 +1,7 @@
 <template>
 
 <div class="w-full h-full ">
-    <DataTable paginator :rows="10" dataKey="id" scrollable filterDisplay="menu"
+    <DataTable paginator :rows="10" dataKey="id" scrollable scrollHeight="500px" filterDisplay="row"
         :globalFilterFields="['name', 'description']" class="text-xs h-[100%]" showGridlines stripedRows v-model:filters="filters" v-model:selection="selectedDocuments" editMode="cell" :value="documents" @cell-edit-complete="onCellEditComplete">
     <template #header>
         <div class="flex justify-between">
@@ -33,51 +33,57 @@
         <template #body="{ data }">
             <div @contextmenu="onRightClick" @click="openDocument(data)" class="cursor-pointer">{{ data.name }}</div>
         </template>
-        <template #editor="{ data }">
-            <InputText v-model="data.name" autofocus />
-        </template>
+       
         <template #filter="{ filterModel, filterCallback }">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search by name" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
         </template>
     </Column>
-    <Column header="Description" field="description" style="min-width: 20rem">
-        <template #editor="{ data }">
-            <InputText v-model="data.description" autofocus />
-        </template>
+    <Column header="Description" field="title" style="min-width: 20rem">
+     
         <template #filter="{ filterModel, filterCallback }">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filte py-[0.5rem] px-[0.75rem]" placeholder="Search by description" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filte py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
         </template>
     </Column>
-    <Column header="Tag" field="tag" style="min-width: 12rem">
-        <template #editor="{ data }">
-            <Dropdown v-model="data.tag" editable :options="tabs" optionLabel="name" placeholder="Select group" class="flex-auto border-[#cbd5e1] border border-solid text-ellipsis w-[250px]" />
-        </template>
+    <Column header="Tag" field="tagName" style="min-width: 12rem">
+        
         <template #filter="{ filterModel, filterCallback }">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search by tag" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
         </template>
     </Column>
     <Column header="Discipline" field="disciplineName" style="min-width: 12rem">
-        <template #editor="{ data }">
-            <Dropdown v-model="data.disciplineName" editable :options="disciplines" optionLabel="name" placeholder="Select group" class="flex-auto border-[#cbd5e1] border border-solid text-ellipsis w-[250px]" />
-        </template>
+      
         <template #filter="{filterModel, filterCallback}">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search by discipline" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
         </template>
     </Column>
-    <Column header="Document Type" field="documentTypeName" style="min-width: 12rem">
-        <template #editor="{ data }">
-            <Dropdown v-model="data.documentTypeName" editable :options="documentTypes" optionLabel="name" placeholder="Select group" class="flex-auto border-[#cbd5e1] border border-solid text-ellipsis w-[250px]" />
-        </template>
+    <Column header="Document Type" field="typeName" style="min-width: 12rem">
+       
         <template #filter="{filterModel, filterCallback}">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search by document type" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
         </template>
     </Column>
+    <Column header="Revision" field="revisionName" style="min-width: 12rem">
+       
+       <template #filter="{filterModel, filterCallback}">
+           <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
+       </template>
+   </Column>
+   <Column header="From/To" field="fromTo" style="min-width: 12rem">
+       
+       <template #filter="{filterModel, filterCallback}">
+           <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
+       </template>
+   </Column>
+   <Column header="PlatForm" field="platForm" style="min-width: 12rem">
+       
+       <template #filter="{filterModel, filterCallback}">
+           <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
+       </template>
+   </Column>
     <Column header="Date" field="createdDate" style="min-width: 12rem">
-        <template #editor="{ data }">
-            <InputText v-model="data.createdDate" autofocus />
-        </template>
+        
         <template #filter="{filterModel, filterCallback}">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search by date" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
         </template>
     </Column>
     <Column header="Contractor" field="contractor" style="min-width: 12rem">
@@ -85,14 +91,13 @@
             <InputText v-model="data.contractor" autofocus />
         </template>
         <template #filter="{filterModel, filterCallback}">
-            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search by constructor" />
+            <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter py-[0.5rem] px-[0.75rem]" placeholder="Search..." />
         </template>
     </Column>
 </DataTable>
+
 </div>
-<Dialog v-model:visible="visibleDialog" modal header="Create Group" :style="{ width: '30rem' }">
-<!-- <CreateGroup v-model="visibleDialog" :groups="groups"/> -->
-</Dialog>
+
 </template>
 <script setup>
     definePageMeta({
@@ -100,11 +105,13 @@
     })
     import '../../../assets/CSS/grid.css';
     import '../../../assets/CSS/styleMain.css';
-    import {documentGetByTypeAPI } from '~/api/documentAPI';
+
+    import { useDocument } from '~/stores/document';
     import {FilterMatchMode} from 'primevue/api';
-    import {tagGetAllAPI} from '../../../api/tagAPI';
-    import {documentTypeGetAllAPI} from '../../../api/documentTypeAPI';
-    import {disciplinesGetAllAPI} from '../../../api/disciplinesAPI';
+
+    import { useDocumentType } from '~/stores/documentType';
+
+    import { useDisciplines } from '~/stores/disciplines';
     import { ref, onMounted } from 'vue';
     const documents = ref([]);
     const selectedDocuments = ref();
@@ -114,51 +121,58 @@
     const documentTypes = ref([]);
     const disciplines = ref([]);
     onMounted(() => {
+        
         loadDocuments();
-        loadAllTab();
-        loadAllDocumentType();
-        loadAllDiscriplines();
+        //loadAllTab();
+        //loadAllDocumentType();
+        //loadAllDiscriplines();
     });
-    const loadAllTab = async () => {
-        try{
-            tabs.value = await tabGetAllAPI();
-        }
-        catch(error){
-            console.log("Error get list tab:"+error);
-        }
-    }
-    const loadAllDocumentType = async () => {
-        try{
-            documentTypes.value = await documentTypeGetAllAPI();
-        }
-        catch(error){
-            console.log("Error get list document type:"+error);
-        }
-    }
-    const loadAllDiscriplines = async () => {
-        try{
-            disciplines.value = await disciplinesGetAllAPI();
-        }
-        catch(error){
-            console.log("Error get list disciplines:"+error);
-        }
-    }
+    // const loadAllTab = async () => {
+    //     try{
+    //        // tabs.value = await tabGetAllAPI();
+    //     }
+    //     catch(error){
+    //         console.log("Error get list tab:"+error);
+    //     }
+    // }
+    // const loadAllDocumentType = async () => {
+    //     try{
+    //         documentTypes.value = await useDocumentType().getAll();
+    //     }
+    //     catch(error){
+    //         console.log("Error get list document type:"+error);
+    //     }
+    // }
+    // const loadAllDiscriplines = async () => {
+    //     try{
+    //         disciplines.value = await useDisciplines().getAll();
+    //     }
+    //     catch(error){
+    //         console.log("Error get list disciplines:"+error);
+    //     }
+    // }
     const filters = ref({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.CONTAINS },
         title: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        tag: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        tagName: { value: null, matchMode: FilterMatchMode.CONTAINS },
         disciplineName: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        documentTypeName: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        typeName: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        fromTo: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        revisionName: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        platForm    : { value: null, matchMode: FilterMatchMode.CONTAINS },
         createdDate: { value: null, matchMode: FilterMatchMode.CONTAINS },
         contractor: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
     const loadDocuments = async () => {
+        isLoading.value = true;
         try{
-            documents.value = await documentGetByTypeAPI(1);
+            documents.value = await useDocument().getByType(1);
         }
         catch(error){
             console.log("Error get list document:"+error);
+        }finally{
+            isLoading.value = false;
         }
     }
     
@@ -191,4 +205,5 @@ const onRightClick = (event) => {
   color: #cccccc;
   border: 2px dashed #1976d2;
 }
+
 </style>

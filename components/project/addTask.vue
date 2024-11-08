@@ -11,7 +11,7 @@
                 <a-input-number :min="1" :max="100" v-model:value="modelValue.process_percent" placeholder="" class="w-full" />
             </a-form-item>
             <a-form-item label="Tỷ trọng">
-                <a-input-number :min="1" v-model:value="modelValue.procoss_weight" placeholder="" class="w-full" />
+                <a-input-number :min="1" v-model:value="modelValue.process_weight" placeholder="" class="w-full" />
             </a-form-item>
             <a-form-item label="Thời gian">
                 <a-range-picker v-model:value="dateRange" class="w-full"/>
@@ -37,14 +37,6 @@
                 </div>
             </a-form-item>
         </a-form>
-        <!-- <div class="col-span-1">
-            <label class="text-lg text-gray-600">Danh sách tài liệu</label>
-            <div class="grid grid-cols-1 gap-3">
-                <span v-for="item in 5" :key="item" class="borber-b-2 border-gray-300">
-                    Tài liệu {{item}}
-                </span>
-            </div>
-        </div> -->
     </div>
 </template>
 

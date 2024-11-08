@@ -11,18 +11,21 @@
     </div>
     <div class="flex items-center gap-3 mb-3">
         <label for="username" class="font-semibold w-[6rem]">Manufacturer</label>
-        <Dropdown v-model="model.manufacturerID" :options="manufacturers" optionLabel="name" placeholder="Select manufacturer" class="flex-auto border-[#cbd5e1] border border-solid text-ellipsis w-[324px]" />
+        <Dropdown v-model="model.manufacturer" :options="manufacturers" optionLabel="name" placeholder="Select manufacturer" class="flex-auto border-[#cbd5e1] border border-solid text-ellipsis w-[324px]" />
     </div>
     <div class="flex justify-end gap-2">
         <Button type="button" label="Cancel" severity="secondary" class="bg-[#f1f5f9] p-2 text-black" @click="closeDialog"></Button>
         <Button type="button" label="Save" class="bg-[#3b82f6] p-2 text-white" @click="saveModel"></Button>
     </div>
+    <Toast />
     </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import {manufacturerGetAllAPI} from '../../api/manufacturerAPI.js';
-import {createModelAPI} from '../../api/modelAPI.js';
+import { useManufacturer } from '~/stores/manufacturer'
+import { useModel } from '~/stores/model';
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const selectedManufacturer = ref();
 const emit = defineEmits(['update:modelValue', 'models']);
 const props = defineProps(['models']);
@@ -42,16 +45,22 @@ const manufacturers = ref([
 ]);
 const getListManufacturer = async () =>{
         try{
-            manufacturers.value = await manufacturerGetAllAPI();
+            manufacturers.value = await useManufacturer().getAll();
         }catch(error){
             console.log("Error get list manufacturer:"+error);
         }
     }
 const saveModel = async () => {
-    model.value.manufacturerID = model.value.manufacturer.id;
-    var data = await createModelAPI(model.value);
-    emit('update:modelValue', false);
-    models.push(data);
+    try{
+        model.value.manufacturerID = model.value.manufacturer.id;
+        var data = await useModel().create(model.value);
+        emit('update:modelValue', false);
+        models.push(data);
+        toast.add({ severity: 'success', detail: 'Create successfully!', summary: 'Success Message', life: 5000 });
+    }catch(error){
+        toast.add({ severity: 'error', detail: 'Create fail!', summary: 'Error Message', life: 5000 });
+        console.log(error);
+    }
 }
 onMounted(async ()=>{
     await getListManufacturer();

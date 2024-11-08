@@ -19,11 +19,10 @@
 import { ref, onMounted } from 'vue';
 import {DocumentView} from '../models/tableView/documentView.js';
 import {Folder} from '../models/folder.js';
-const emit = defineEmits(['update:modelValue', 'documents']);
+const emit = defineEmits(['modelValue', 'documents']);
 const props = defineProps(['documents']);
 var documents = props.documents;
 onMounted(async ()=>{
-   
 })
 const folder = ref(
     {

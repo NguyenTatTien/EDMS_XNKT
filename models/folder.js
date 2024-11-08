@@ -19,6 +19,7 @@ export class Folder {
         this.isSynchronized = null,
         this.folders_destination_Path = null,
         this.folders_destination_ID = null,
-        this.vitualPath = null
+        this.vitualPath = null,
+        this.isPrivate = null
     }
 }

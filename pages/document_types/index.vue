@@ -1,6 +1,6 @@
 <template>
 <div class="w-full h-full ">
-    <DataTable paginator :rows="10" dataKey="id" scrollable filterDisplay="menu" v-model:selection="selectedselectedDocumentTypeGroups" @cell-edit-complete="onCellEditComplete"
+    <DataTable paginator :rows="10" dataKey="id" scrollable filterDisplay="menu" v-model:selection="selectedDocumentType" @cell-edit-complete="onCellEditComplete"
     :globalFilterFields="['name', 'description']" class="text-xs h-[100%]" :value="documentTypes" showGridlines stripedRows v-model:filters="filters" editMode="cell">
 <template #header>
     <div class="flex justify-between">
@@ -51,6 +51,7 @@ layout: 'default'
 import '../../assets/CSS/grid.css'
 import '../../assets/CSS/styleMain.css'
 import {documentTypeGetAllAPI} from '../api/documentTypeAPI.js';
+import { useDocumentType } from '~/stores/documentType';
 import { FilterMatchMode } from 'primevue/api';
 import { ref, onMounted } from 'vue';
 const visibleDialog = ref(false);
@@ -62,11 +63,12 @@ const filters = ref({
     description: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 onMounted(async ()=>{
+    
     getListDocumentType();
 })
 const getListDocumentType = async () =>{
     try{
-        documentTypes.value = await documentTypeGetAllAPI();
+        documentTypes.value = await useDocumentType().getAll();
     }catch(error){
         console.log("Error get list group:"+error);
     }

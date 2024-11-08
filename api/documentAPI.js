@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {urlDocumentGetAll,urlDocumentGetByFolder,urlDocumentGetByType,urlCopyFileToFolder,urlMoveFileToFolder,urlGetDocumentByTag,urlGetDocumentByTagAndType,urlCreateDocument,urlUpdateDocument,urlDeleteDocument,urlExportDocument,urlSearchDocument} from './setupAPI.js'
+import {urlDocumentGetAll,urlDocumentGetByFolder,urlDocumentGetByType,urlCopyFileToFolder,urlMoveFileToFolder,urlGetDocumentByTag,urlGetDocumentByTagAndType,urlCreateDocument,urlUpdateDocument,urlDeleteDocument,urlExportDocument,urlSearchDocument,urlImportDocument,urlDownload,urlDownloadMulti} from './setupAPI.js'
 export const documentGetAllAPI = async () => {
      
     try {
@@ -94,11 +94,12 @@ export const getDocumentByTagAndTypeAPI = async (tagId, typeId) => {
     // Handle network or other errors
   }
 }
-export const createDocumentAPI = async (document) => {
+export const createDocumentAPI = async (formData) => {
+ 
   try {
-    const response = await axios.post(`${urlCreateDocument}`,document, {
+    const response = await axios.post(`${urlCreateDocument}`,formData, {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
         },
     });
     return await response.data;
@@ -133,14 +134,12 @@ export const deleteDocumentAPI = async (Id) => {
     // Handle network or other errors
   }
 }
-export const exportDocumentAPI = async (folderID) => {
+export const exportDocumentAPI = async (data) => {
   try {
-    const response = await axios.post(`${urlExportDocument}?folderID=${folderID}`, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+    const response = await axios.post(`${urlExportDocument}`,data, {
+      responseType: 'blob'
     });
-    return await response.data;
+    return await response;
   } catch (error) {
     throw error;
     // Handle network or other errors
@@ -157,6 +156,47 @@ export const searchDocumentAPI = async (search) => {
   } catch (error) {
     throw error;
     // Handle network or other errors
+  }
+}
+export const importDocumentAPI = async (data) => {
+  try {
+    const response = await axios.post(`${urlImportDocument}`,data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+    });
+    return await response.data;
+  } catch (error) {
+    throw error;
+    // Handle network or other errors
+  }
+}
+export const downloadDocumentAPI = async (data) => {
+  try {
+    const response = await axios.post(`${urlDownload}`,data, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    },
+    );
+    return await response;
+  } catch (error) {
+    throw error;
+    // Handle network or other errors
+  }
+}
+export const downloadMultiDocumentAPI = async (documents) => {
+  try {
+    const response = await axios.post(`${urlDownloadMulti}`,documents, {
+   
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+    },
+    );
+    return await response;
+  } catch (error) {
+     throw error;
   }
 }
 

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import {urlSendMail,urlgetObjcetMail} from './setupAPI.js'
+import {urlSendMail,urlgetInforMail} from './setupAPI.js'
+
 export const sendMailAPI = async (objMail) => {
     try {
       const response = await axios.post(`${urlSendMail}`,objMail, {
@@ -13,9 +14,9 @@ export const sendMailAPI = async (objMail) => {
       // Handle network or other errors
     }
 }
-export const getObjcetMailAPI = async () => {
+export const getInforMailAPI = async (data) => {
   try {
-    const response = await axios.get(`${urlgetObjcetMail}`, {
+    const response = await axios.post(`${urlgetInforMail}?type=${data.type}`,data.documents, {
         headers: {
             'Content-Type': 'application/json',
         },

@@ -1,11 +1,10 @@
 .sidebarEdit {
     height: 100%;
     width: 0;
-    position: fixed;
+    position: relative;
     z-index: 1;
     top: 0;
     right: 0;
-    border-left: 1px solid #ccc;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 20px;
@@ -13,6 +12,9 @@
     
   }
   #content {
+    transition: margin-right .5s;
+  }
+  #content_grid {
     transition: margin-right .5s;
   }
   @media screen and (max-height: 450px) {

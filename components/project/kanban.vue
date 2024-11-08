@@ -27,13 +27,11 @@
           :list="list2"
           group="people"
           @change="log"
-          :move="checkMove"
-        >
+          :move="checkMove">
           <div
             class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
             v-for="element in list2"
-            :key="element.name"
-          >
+            :key="element.name">
             {{ element.name }}
           </div>
         </draggable>
@@ -44,13 +42,11 @@
           :list="list2"
           group="people"
           @change="log"
-          :move="checkMove"
-        >
+          :move="checkMove">
           <div
             class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
             v-for="element in list2"
-            :key="element.name"
-          >
+            :key="element.name">
             {{ element.name }}
           </div>
         </draggable>

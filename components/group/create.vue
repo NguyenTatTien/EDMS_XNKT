@@ -13,14 +13,17 @@
         <Button type="button" label="Cancel" severity="secondary" class="bg-[#f1f5f9] p-2 text-black" @click="closeDialog"></Button>
         <Button type="button" label="Save" class="bg-[#3b82f6] p-2 text-white" @click="saveGroup"></Button>
     </div>
+    <Toast />
     </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import {createGroupAPI} from '../../api/groupAPI.js';
+import { useGroup } from '~/stores/group';
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const emit = defineEmits(['update:modelValue', 'groups']);
 const props = defineProps(['groups']);
-var groups = props.groups;
+const groups = props.groups;
 const group = ref({
     name: "",
     description: "",
@@ -31,13 +34,17 @@ const closeDialog = () => {
     emit('update:modelValue', false);
 }
 const saveGroup = async () => {
-    var data = await createGroupAPI(group.value);
-    emit('update:modelValue', false);
-    groups.push(data);
+    try{
+        var data = await useGroup().create(group.value);
+        emit('update:modelValue', false);
+        groups.push(data);
+        toast.add({ severity: 'success', detail: 'Create successfully!', summary: 'Success Message', life: 5000 });
+    }catch(error){
+        toast.add({ severity: 'error', detail: 'Create fail!', summary: 'Error Message', life: 5000 });
+        console.log(error);
+    }
 }
-
 </script>
-
 <style scoped>
     .p-button{
         padding: 0.5rem 1rem !important;

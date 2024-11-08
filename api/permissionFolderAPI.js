@@ -1,4 +1,4 @@
-import {urlPermissionGetByFolder,urlCreateFolderPermission,urlDeleteFolderPermission,urlUpdateFolderPermission} from './setupAPI.js';
+import {urlPermissionGetByFolder,urlCreateFolderPermission,urlDeleteFolderPermission,urlUpdateFolderPermission,urlGetPermissionByFolder} from './setupAPI.js';
 import axios from 'axios';
 export const getPermissionByFolderAPI = async (folderId) => {
     try {
@@ -13,9 +13,22 @@ export const getPermissionByFolderAPI = async (folderId) => {
       // Handle network or other errors
     }
   }
-export const createFolderPermissionAPI = async (folderPermission)=>{
+  export const getJsonPermissionByFolderAPI = async (folderId,categoryId,userId) => {
     try {
-      const response = await axios.post(`${urlCreateFolderPermission}`,folderPermission, {
+      const response = await axios.get(`${urlGetPermissionByFolder}?folderId=${folderId}&categoryId=${categoryId}&userId=${userId}`, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  }
+export const createFolderPermissionAPI = async (folderPermission,checkedAll)=>{
+    try {
+      const response = await axios.post(`${urlCreateFolderPermission}?checkedAll=${checkedAll}`,folderPermission, {
           headers: {
               'Content-Type': 'application/json',
           },

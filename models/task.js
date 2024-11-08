@@ -1,0 +1,35 @@
+export class Task {
+    constructor() {
+          this.id = 0,
+          this.name = 'Task mới',
+          this.description = 'Task mới',
+          this.createdBy = null,
+          this.createdByName = null,
+          this.startDate= new Date(),
+          this.endDate= null,
+          this.estimatedDate= new Date(),
+          this.phaseID = null,
+          this.isDelete = false,
+          this.isApprove = false,
+          this.process_Percent= 0,
+          this.process_Weight= 0,
+          this.workHour = 0,
+          this.mainJoinBy = null,
+          this.mainJoinByName = null,
+          this.mainJoinBy = null,
+          this.subJoinByIds = null,
+          this.subJoinByNames = null,
+          this.subJoins = [],
+          this.isProcess = false,
+          this.isComplete = false,
+          this.isLate = false,
+          this.isCancel = false,
+          this.remark = null,
+          this.parentID = null,
+          this.parentName = null,
+            this.folderID = null,
+      this.folderName = "",
+      this.cancelComment = null
+    }
+    
+  }

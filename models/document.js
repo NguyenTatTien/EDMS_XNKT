@@ -48,9 +48,13 @@ export class Document{
             this.platform= null,
             this.date= null,
             this.contractor= null,
-            this.tag= null,
+            this.tagName= null,
             this.folderName= null,
             this.vitualPath= null,
-            this.modelID= null
+            this.tagID = null,
+            this.tagSystemPlant= null,
+            this.typeID = null,
+            this.typeName = null,
+            this.createdByName = null
     }
 }

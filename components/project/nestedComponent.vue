@@ -1,323 +1,71 @@
 <template>
   <div class="flex justify-center">
     <div class="w-full mr-2">
-      <span>
-        <a-button class="" @click="showAddModel">Thêm</a-button>
-      </span>
-      <nested-draggable :tasks="list" />
-
-      <a-modal v-model:open="openModel" width="1000px" title="Thêm phase mới" @ok="addPhaseOk">
-        <ProjectEditTask v-model="openAddModel"></ProjectEditTask>
+      <ProjectTablePhase v-model="list" />
+      <a-modal v-model:open="openModel" width="80vw" @ok="addPhaseOk"  style="top: 60px" :destroyOnClose="true">
+        <template #footer>
+        </template>
+        <ProjectEditPhase v-model="openModel" :isTask="true" :parentID="projectID" :data="openAddModel" @close="closeDialog"></ProjectEditPhase>
       </a-modal>
+      <!-- <Dialog v-model:visible="openModel" modal header=" " class="w-[80vw] h-full max-h-full" id="viewFile">
+        <ProjectEditTask v-model="openModel" :isTask="true" :data="openAddModel"></ProjectEditTask>
+    </Dialog> -->
     </div>
   </div>
 </template>
-
-<script>
-import { defineComponent, ref } from 'vue'
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue'
 import nestedDraggable from './nested.vue'
-export default defineComponent({
-  name: 'nested-example',
-  display: 'Nested',
-  order: 15,
-  components: {
-    nestedDraggable,
-  },
-  setup() {
-    const list = ref([
-      // {
-      //   name: 'Triển khai phase 1',
-      //   userCreated: {
-      //     name: "admin",
-      //     slug: '/user/admin'
-      //   },
-      //   userRelation: [
-      //     {
-      //       name: "admin",
-      //       slug: '/user/admin'
-      //     },
-      //     {
-      //       name: "Toàn",
-      //       slug: '/user/toan'
-      //     }
-      //   ],
-      //   dateStart: new Date(),
-      //   dateEnd: new Date(),
-      //   comment: "",
-      //   document: [
-      //     {
-      //       name: "Document 1",
-      //       slug: '/document/1',
-      //       url: {
-      //         original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-      //         thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-      //       }
-      //     }
-      //   ],
-      //   process_percent: 50,
-      //   procoss_weight: 20,
-      //   tasks: [
-      //     {
-      //       name: 'Task phase 1',
-      //       process_percent: 0,
-      //       procoss_weight: 10,
-      //       userCreated: {
-      //         name: "admin",
-      //         slug: '/user/admin'
-      //       },
-      //       userRelation: [
-      //         {
-      //           name: "admin",
-      //           slug: '/user/admin'
-      //         },
-      //         {
-      //           name: "Toàn",
-      //           slug: '/user/toan'
-      //         }
-      //       ],
-      //       dateStart: new Date(),
-      //       dateEnd: new Date(),
-      //       comment: "",
-      //       document: [
-      //         {
-      //           name: "Document 1",
-      //           slug: '/document/1',
-      //           url: {
-      //             original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-      //             thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-      //           }
-      //         }
-      //       ],
-      //       // tasks: [],
-      //     },
-      //     {
-      //       name: 'Task phase 2',
-      //       process_percent: 100,
-      //       procoss_weight: 10,
-      //       userCreated: {
-      //         name: "admin",
-      //         slug: '/user/admin'
-      //       },
-      //       userRelation: [
-      //         {
-      //           name: "admin",
-      //           slug: '/user/admin'
-      //         },
-      //         {
-      //           name: "Toàn",
-      //           slug: '/user/toan'
-      //         }
-      //       ],
-      //       dateStart: new Date(),
-      //       dateEnd: new Date(),
-      //       comment: "",
-      //       document: [
-      //         {
-      //           name: "Document 1",
-      //           slug: '/document/1',
-      //           url: {
-      //             original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-      //             thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-      //           }
-      //         }
-      //       ],
-      //       // tasks: [],
-      //     },
-      //   ],
-      // },
-      // {
-      //   name: 'Triển khai phase 2',
-      //   process_percent: 100,
-      //   procoss_weight: 30,
-      //   userCreated: {
-      //     name: "admin",
-      //     slug: '/user/admin'
-      //   },
-      //   userRelation: [
-      //     {
-      //       name: "admin",
-      //       slug: '/user/admin'
-      //     },
-      //     {
-      //       name: "Toàn",
-      //       slug: '/user/toan'
-      //     }
-      //   ],
-      //   dateStart: new Date(),
-      //   dateEnd: new Date(),
-      //   comment: "",
-      //   document: [
-      //     {
-      //       name: "Document 1",
-      //       slug: '/document/1',
-      //       url: {
-      //         original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-      //         thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-      //       }
-      //     }
-      //   ],
-      //   tasks: [
-      //     {
-      //       name: 'task 4',
-      //       // tasks: [],
-      //       process_percent: 100,
-      //       procoss_weight: 10,
-      //       userCreated: {
-      //         name: "admin",
-      //         slug: '/user/admin'
-      //       },
-      //       userRelation: [
-      //         {
-      //           name: "admin",
-      //           slug: '/user/admin'
-      //         },
-      //         {
-      //           name: "Toàn",
-      //           slug: '/user/toan'
-      //         }
-      //       ],
-      //       dateStart: new Date(),
-      //       dateEnd: new Date(),
-      //       comment: "",
-      //       document: [
-      //         {
-      //           name: "Document 1",
-      //           slug: '/document/1',
-      //           url: {
-      //             original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-      //             thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-      //           }
-      //         }
-      //       ],
-      //     },
-      //   ],
-      // },
-      // {
-      //   name: 'Triển khai phase 3',
-      //   process_percent: 100,
-      //   procoss_weight: 50,
-      //   userCreated: {
-      //     name: "admin",
-      //     slug: '/user/admin'
-      //   },
-      //   userRelation: [
-      //     {
-      //       name: "admin",
-      //       slug: '/user/admin'
-      //     },
-      //     {
-      //       name: "Toàn",
-      //       slug: '/user/toan'
-      //     }
-      //   ],
-      //   dateStart: new Date(),
-      //   dateEnd: new Date(),
-      //   comment: "",
-      //   document: [
-      //     {
-      //       name: "Document 1",
-      //       slug: '/document/1',
-      //       url: {
-      //         original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-      //         thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-      //       }
-      //     }
-      //   ],
-      //   tasks: [
-      //     {
-      //       name: 'Task của phase 3 - 1',
-      //       process_percent: 100,
-      //       procoss_weight: 10,
-      //       userCreated: {
-      //         name: "admin",
-      //         slug: '/user/admin'
-      //       },
-      //       userRelation: [
-      //         {
-      //           name: "admin",
-      //           slug: '/user/admin'
-      //         },
-      //         {
-      //           name: "Toàn",
-      //           slug: '/user/toan'
-      //         }
-      //       ],
-      //       dateStart: new Date(),
-      //       dateEnd: new Date(),
-      //       comment: "",
-      //       document: [
-      //         {
-      //           name: "Document 1",
-      //           slug: '/document/1',
-      //           url: {
-      //             original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-      //             thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-      //           }
-      //         }
-      //       ],
-      //       // tasks: [],
-      //     },
-      //   ],
-      // },
-    ])
-    return { list }
-  },
-  data() {
-    return {
-      openModel: false,
-      openAddModel: {
-        name: 'Phase mới',
-        process_percent: 0,
-        procoss_weight: 0,
-        userCreated: {
-          name: "admin",
-          slug: '/user/admin'
-        },
-        userRelation: [
-          {
-            name: "admin",
-            slug: '/user/admin'
-          },
-          {
-            name: "Toàn",
-            slug: '/user/toan'
-          }
-        ],
-        dateStart: new Date(),
-        dateEnd: new Date(),
-        comment: "",
-        document: [
-          {
-            name: "Document 1",
-            slug: '/document/1',
-            url: {
-              original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-              thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-            }
-          }
-        ],
-        tasks: [],
-      },
-    }
-  },
-  methods: {
-    showAddModel() {
-      this.openModel = true;
-    },
-    addPhaseOk(){
-      this.list.push(
-        JSON.parse(JSON.stringify(this.openAddModel))
-      );
-      this.openModel = false;
-    }
-  },
-  watch: {
-    list: {
-      deep: true,
-      handler() {
-        //alert('a')
-      }
-    }
-  }
+import { useProject } from '~/stores/project'
+import { storeToRefs } from 'pinia'
+import Dialog from 'primevue/dialog';
+import { Phase } from '~/models/phase';
+import { usePhase } from '~/stores/phase';
+import { useTask } from '~/stores/task'
+import { useRoute } from 'vue-router';
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['modelValue'])
+const route = useRoute();
+const list = ref([])
+const openModel = ref(false)
+const openAddModel = ref(new Phase())
+const list2 = computed(() => props.modelValue)
+const projectID = ref(0);
+function test() {
+  openModel.value = false
+}
+
+function showAddModel() {
+  openModel.value = true
+}
+onMounted(() => {
+  projectID.value = route.params.id;
+  getTasks();
 })
+const getTasks = async() => {
+  
+ 
+  list.value = await usePhase().getAllByProject(projectID.value);
+}
+function addPhaseOk() {
+  openModel.value = false
+  openAddModel.value.id = Date.now().toString()
+  list.value.push(JSON.parse(JSON.stringify(openAddModel.value)))
+  openModel.value = false
+}
+const closeDialog = () => {
+  openModel.value = false
+}
+// watch(list, (newModel, oldModel) => {
+//   newModel.forEach(p => {
+//     if (p.tasks.length > 0) {
+//       let sum = p.tasks.reduce((a, b) => a + (b.process_percent * b.process_weight / 100), 0)
+//       p.process_percent = sum
+//     }
+//   })
+//   const { selectedModel } = storeToRefs(useProject())
+//   selectedModel.value.tasks = newModel
+// }, { deep: true })
+
+// Mounting logic if any
 </script>

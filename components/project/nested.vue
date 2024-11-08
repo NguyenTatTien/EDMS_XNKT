@@ -30,7 +30,7 @@
                                                 <span>Ngày: {{ new Date().toLocaleDateString() }}</span>
                                             </div>
                                             <div class="text-xs px-2 py-1 rounded-full bg-blue-100">
-                                                <span>Người làm chính: Nguyễn Văn A</span>
+                                                <span>Quản ly: Nguyễn Văn A</span>
                                             </div>
                                         </div>
                                     </div>
@@ -102,28 +102,46 @@
                 </li>
             </transition-group>
         </draggable>
-        <a-modal v-model:open="open" width="1000px" :title="openModel.name" @ok="handleOk">
-            <ProjectEditTask v-model="openModel"></ProjectEditTask>
-        </a-modal>
-        <a-modal v-model:open="openAdd" width="1000px" title="Thêm task mới" @ok="addTaskHandleOk">
+        <!-- <a-modal v-model:open="openModel" width="1000px">
+            <ProjectEditTask v-model="openAddModel" @close="test"></ProjectEditTask>
+        </a-modal> -->
+        <!-- <Dialog ref="dialogEdit" v-model:visible="open" maximizable modal header="Sửa task" :style="{ width: '80vw', height: '90vh' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+            <template #container>
+                <div class="p-4 h-full">
+                    <ProjectEditTask v-model="openAddModel" @maximize="test" @close="closeCallback"></ProjectEditTask>
+                </div>
+            </template>
+        </Dialog>
+        <Dialog ref="dialogAdd" v-model:visible="openAdd" maximizable modal header="Thêm task mới" :style="{ width: '80vw', height: '90vh' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
             <ProjectEditTask v-model="openAddModel"></ProjectEditTask>
-        </a-modal>
+            <Button label="Cancel" @click="closeCallback" text class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"></Button>
+        </Dialog> -->
+        <!-- <a-modal v-model:open="open" width="1000px" :title="openModel.name" @ok="handleOk">
+            <ProjectEditTask v-model="openModel"></ProjectEditTask>
+        </a-modal> -->
+        <!-- <a-modal v-model:open="openAdd" width="1000px" title="Thêm task mới" @ok="addTaskHandleOk">
+            <ProjectEditTask v-model="openAddModel"></ProjectEditTask>
+        </a-modal> -->
     </div>
 </template>
 <script>
 import { VueDraggableNext } from 'vue-draggable-next'
 import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
+import Button from 'primevue/button';
 export default {
     data() {
         return {
             open: false,
             openModel : {},
             openAdd: false,
+            dialogEdit : null,
+            dialogAdd : null,
             openAddModel : {
+                    id : Date.now(),
                     name: 'Task mới',
                     process_percent: 0,
-                    procoss_weight: 0,
+                    process_weight: 0,
                     userCreated: {
                         name: "admin",
                         slug: '/user/admin'
@@ -140,15 +158,14 @@ export default {
                     ],
                     dateStart: new Date(),
                     dateEnd: new Date(),
-                    comment: "",
                     document: [
                     {
-                        name: "Document 1",
-                        slug: '/document/1',
-                        url: {
-                        original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
-                        thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
-                        }
+                        // name: "Document 1",
+                        // slug: '/document/1',
+                        // url: {
+                        // original: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png",
+                        // thumbnail: "https://upload.wikimedia.org/wikipedia/commons/0/08/Microsoft_Word_logo_%282013-2019%29.png"
+                        // }
                     }
                     ],
                     tasks: [],
@@ -171,25 +188,40 @@ export default {
     },
     name: 'nested-draggable',
     methods: {
+        test(val) {
+            alert('a')
+        },
+        closeCallback() {
+            this.open = false;
+            this.openAdd = false;
+        },
+        maximize() {
+            console.log(this.$refs.dialogEdit)
+            if (this.$refs.dialogEdit.maximized){
+                this.$refs.dialogEdit.maximize(false)
+            }
+            else {
+                this.$refs.dialogEdit.maximize()
+            }
+        },
         blur(el,data){
             el.name = data;
         },
         addDetail(el) {
+            this.openAddModel.id = Date.now().toString();
             el.tasks.push(
                 JSON.parse(JSON.stringify(this.openAddModel))
-            )
+            );
         },
         showModal(el) {
             this.openModel = el;
             this.open = true;
         },
         handleOk(e) {
-            this.open = false
+            this.open = false;
         },
         addTaskHandleOk() {
-            this.openAdd = false
-            console.log(this.openAddParentModel.process_percent)
-            //this.openAddParentModel.process_percent = this.openAddParentModel.tasks.sum(p=> (p.process_percent * p.procoss_weight)/100);
+            this.openAdd = false;
             this.addDetail(this.openAddParentModel)
         },
         showAddModel(el) {

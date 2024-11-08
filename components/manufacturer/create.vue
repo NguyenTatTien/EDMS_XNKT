@@ -13,11 +13,14 @@
         <Button type="button" label="Cancel" severity="secondary" class="bg-[#f1f5f9] p-2 text-black" @click="closeDialog"></Button>
         <Button type="button" label="Save" class="bg-[#3b82f6] p-2 text-white" @click="saveManufacturer"></Button>
     </div>
+    <Toast />
     </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import {createManufacturerAPI} from '../../api/manufacturerAPI.js';
+import { useManufacturer } from '~/stores/manufacturer';
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const manufacturer = ref({
   id: 0,
   name: "",
@@ -31,10 +34,15 @@ const emit = defineEmits(['update:modelValue', 'manufacturers']);
 const props = defineProps(['manufacturers']);
 var manufacturers = props.manufacturers;
 const saveManufacturer = async () => {
-    console.log(manufacturers);
-     var data = await createManufacturerAPI(manufacturer.value);
-     emit('update:modelValue', false);
-     manufacturers.push(data);
+     try{
+        var data = await useManufacturer().create(manufacturer.value);
+        emit('update:modelValue', false);
+        manufacturers.push(data);
+        toast.add({ severity: 'success', detail: 'Create successfully!', summary: 'Success Message', life: 5000 });
+     }catch(error){
+        toast.add({ severity: 'error', detail: 'Create fail!', summary: 'Error Message', life: 5000 });
+        console.log(error);
+     }
 }
 const closeDialog = () => {
     emit('update:modelValue', false);

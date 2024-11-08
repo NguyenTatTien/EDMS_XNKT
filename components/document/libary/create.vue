@@ -90,8 +90,10 @@ const getDisciplines = async () => {
 }
 const savedocument = async () => {
     // var data = await createDocumentAPI(document.value);
+    var userId = localStorage.getItem("userId");
     document.value.type="folder";
     document.value.object.createdDate=new Date("2020-04-09T11:10:25.247");
+    document.value.object.createdBy=userId;
     document.value.object.fileExtensionIcon = "/images/folderdir16.png";
     documents.push(document.value);
     emit('update:modelValue', false);

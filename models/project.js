@@ -1,13 +1,40 @@
 export class Project {
     constructor() {
-        this.id = null;
-        this.name = "";
-        this.description = "";
-        this.status = "In Process";
-        this.createBy = null;
-        this.createDate = null;
-        this.startDate = null,
-        this.endDate = null,
-        this.completed = 0
+        this.id= 0,
+        this.name = "New Project",
+        this.description = "New Project",
+        this.createdBy= null,
+        this.createdByName= null,
+        this.unitID= null,
+        this.unitName= null,
+        this.process_Percent= 0,
+        this.startDate= new Date(),
+        this.endDate= null,
+        this.estimatedDate = new Date(),
+        this.isApprove= false,
+        this.isDeleted= false,
+        this.mainManagerID = null,
+        this.mainManagerName = null
+        this.isProcess= false,
+        this.isComplete= false,
+        this.isLate= false,
+        this.isCancel= false,
+        this.secondApproveBy= null,
+        this.secondApproveByName= null,
+        this.remark = null,
+        this.approvals = [],
+        this.phases = [],
+        this.approvalIds = [],
+        this.departmentID = null,
+        this.departmentName = null,
+        this.fileApprove = null,
+        this.subManagerIDs = null,
+        this.subManagerNames = null,
+        this.subManagers = [],
+        this.folderID = null,
+        this.folderName = "",
+        this.approverID = null,
+        this.approverName = null,
+        this.cancelComment = null
     }
 }

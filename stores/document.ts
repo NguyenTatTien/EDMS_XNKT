@@ -1,157 +1,208 @@
 import { defineStore } from 'pinia'
-
+import { useAxios } from '~/composables/useAxios'
+import {urlDocumentGetAll,urlDocumentGetByFolder,urlGetAllDocumentsByListFolder,urlDocumentGetByType,urlCopyFileToFolder,urlMoveFileToFolder,urlGetDocumentByTag,
+  urlGetDocumentByTagAndType,urlCreateDocument,urlUpdateDocument,urlDeleteDocument,urlExportDocument,urlSearchDocument,urlImportDocument,urlDownload,urlDownloadMulti,
+  urlSearchDocumentByCategory,urlDocumentGetByID,urlDocumentUpload,urlDocumentDeleteFile,urlDocumentViewFile,urlGetDocumentsByListFolder,urlGet500Items,urlSearchContractor,
+  urlSearchDocNumber,urlSearchDocType,urlSearchFormTo,urlSearchModel,urlSearchName,urlSearchPlatForm,urlSearchRemark,urlSearchSubType,urlSearchTag,urlSearchTitle,urlDeleteMulti,
+  urlUploadDocument,urlGetCountDocuments,urlDocumentSearchAllChild,urlDocumentUploadInsDocument} from '~/api/setupAPI.js'
 export const useDocument = defineStore('document', {
   state: () => {
     return {
-        rawData: [
-            {
-              id: 1,
-              name: 'root',
-              slug: '#',
-              type: 1,
-              is_dir: true,
-              data: [],
-              parentId: null
-            },
-            {
-                id: 1,
-                name: 'word 1',
-                slug: 'word-1',
-                type: 1,
-                mimeType: 'application/word',
-                link: {
-                    src: '',
-                    review: '',
-                    screenshot: ''
-                },
-                is_dir: false,
-                folder: 1
-            },
-            {
-                id: 2,
-                name: 'excel 2',
-                slug: '#',
-                type: 1,
-                mimeType: 'application/excel',
-                link: {
-                    src: '',
-                    review: '',
-                    screenshot: ''
-                },
-                is_dir: false,
-                folder: 1
-            },
-            {
-              id: 2,
-              name: 'folder 1',
-              slug: 'folder-1',
-              type: 1,
-              is_dir: true,
-              data: [],
-              parentId: 1
-            },
-            {
-              id: 3,
-              name: 'folder 2',
-              slug: 'folder-2',
-              type: 1,
-              is_dir: true,
-              data: [],
-              parentId: 2
-            }
-        ],
-        data: [] as TreeItem[]
+      data: [],
+      files:[],
+      folder:[],
+      fileAndFolder:[]
     }
   },
   actions: {
-    init() {
-      this.data = this.buildTree(this.rawData as TreeItem[]);
-      console.log(this.data)
+   async getDocumentByFolder(folderId: number) {
+     let returnData = await useAxios().value.get(`${urlDocumentGetByFolder}?folderId=${folderId}`)
+     this.data = returnData.data;
+     return returnData.data;
     },
-    getFolderBySlug(slugs: string[], data: any): any {
-        try {
-            console.log(slugs,data)
-            if (slugs.length === 0) {
-              return { slug: '', data: [] };
-            }
-          
-            const currentSlug = slugs.shift();
-            const foundFolder = data.find((item: { slug: string }) => item.slug === currentSlug);
-    
-            console.log(foundFolder)
-          
-            if (!foundFolder || !foundFolder.is_dir) {
-              return null; // Folder not found or not a directory
-            }
-          
-            if (slugs.length === 0) {
-              return foundFolder; // Reached the end of the slugs, return the found folder
-            }
-          
-            return this.getFolderBySlug(slugs, foundFolder.data); // Recursive call for the next slug
-        }
-        catch (error) {
-            return null
-        }
+    //get all document
+    async getAll() {
+      let returnData = await useAxios().value.get(`${urlDocumentGetAll}`)
+      this.data = returnData.data;
+      return returnData.data;
     },
-    moveFileToFoldeer(file: any, folder: any) {
-        console.log(file, folder)
-        var _file = this.findByIdAndIsDir(this.data, file, false)
-        var _folder = this.findByIdAndIsDir(this.data, folder, true)
-        console.log(toRaw(_file),toRaw(_folder))
+    //document by type
+    async getByType(typeId: number) {
+      let returnData = await useAxios().value.get(`${urlDocumentGetByType}?typeId=${typeId}`)
+      return returnData.data
     },
-    findByIdAndIsDir(data: any[], id: number, isDir: boolean): any | null {
-        for (let item of data) {
-          if (item.id == id && item.is_dir == isDir) {
-            return item;
-          }
-          if (item.data && item.data.length > 0) {
-            const result = this.findByIdAndIsDir(item.data, id, isDir);
-            if (result) {
-              return result;
-            }
-          }
-        }
-        return null;
+    //copy file
+    async copyFile(fileId: number, folderId: number) {
+      let returnData = await useAxios().value.post(`${urlCopyFileToFolder}?fileId=${fileId}&folderId=${folderId}`)
+      return returnData.data
     },
-    buildTree(rawData: TreeItem[]) {
-      var root = this.findByIdAndIsDir(rawData, 1, true)
-      var childs = rawData.filter(p=>p.is_dir == true && p.parentId == null)
-      console.log(root, childs);
+    //move file
+    async moveFile(fileId: number, folderId: number) {
+      let returnData = await useAxios().value.post(`${urlMoveFileToFolder}?fileId=${fileId}&folderId=${folderId}`)
+      return returnData.data
+    },
+    //get document by tag
+    async getDocumentByTag(tagId: number) {
+      let returnData = await useAxios().value.get(`${urlGetDocumentByTag}?tagId=${tagId}`)
+      return returnData.data
+    },
+    //get document by tag and type
+    async getDocumentByTagAndType(tagId: number, typeId: number) {
+      let returnData = await useAxios().value.get(`${urlGetDocumentByTagAndType}?tagId=${tagId}&typeId=${typeId}`)
+      return returnData.data
+    },
+    //create document
+    async create(data: any) {
+      let returnData = await useAxios().value.post(`${urlCreateDocument}`, data)
+      return returnData.data
+    },
+    //update document
+    async update(data: any) {
+      let returnData = await useAxios().value.put(`${urlUpdateDocument}`, data)
+      return returnData.data
+    },
+    //delete document
+    async delete(id: number) {
+      let returnData = await useAxios().value.delete(`${urlDeleteDocument}?id=${id}`)
+      return returnData.data
+    },
+    async deleteMulti(data:any) {
+      let returnData = await useAxios().value.post(`${urlDeleteMulti}`, data)
+      return returnData.data   
+    },
+    //export document
+    async export(data:any) {
+      let returnData = await useAxios().value.post(`${urlExportDocument}`,data)
+      return returnData.data
+    },
+    //search document
+    async search(data: any) {
+      let returnData = await useAxios().value.post(`${urlSearchDocument}`, data)
+      return returnData.data
+    },
+    //import document
+    async import(data: any) {
+      let returnData = await useAxios().value.post(`${urlImportDocument}`, data)
+      return returnData.data
+    },
+    //download
+    async download(data: any) {
+      let returnData = await useAxios().value.post(`${urlDownload}`,data,{
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      },)
+      return returnData
+    },
+    //download multi
+    async downloadMulti(data:any) {
+      let returnData = await useAxios().value.post(`${urlDownloadMulti}`,data)
+      return returnData
+    },
+    // search document by category
+    async searchByCategory(search: string,categoryID:number) {
+      let returnData = await useAxios().value.get(`${urlSearchDocumentByCategory}?search=${search}&categoryID=${categoryID}`)
+      return returnData.data
+    },
+    async getByID(Id: number) {
+      let returnData = await useAxios().value.get(`${urlDocumentGetByID}?Id=${Id}`)
+      return returnData.data
+    },
+    async deleteFile(files: string) {
+      let returnData = await useAxios().value.delete(`${urlDocumentDeleteFile}?filePath=${files}`)
+      return returnData.data;
+    },
+    async ViewFile(id: number) {
+      let returnData = await useAxios().value.get(`${urlDocumentViewFile}?Id=${id}`)
+      return returnData.data;
+    },
+    async getDocumentsByListFolder(folders: any) {
+      let returnData = await useAxios().value.post(`${urlGetDocumentsByListFolder}`,folders)
+      return returnData.data;
+    },
+    async getAllDocumentsByListFolder(folders: any) {
+      let returnData = await useAxios().value.post(`${urlGetAllDocumentsByListFolder}`,folders)
+      return returnData.data;
+    },
+    //get 200 itemsq
+    async get500Items() {
+      let returnData = await useAxios().value.get(`${urlGet500Items}`)
+      return returnData.data;
+    },
+    async getCountDocuments(){
+      let returnData = await useAxios().value.get(`${urlGetCountDocuments}`)
+      return returnData.data;
+    },
+    //search contractor
+    async searchContractor(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchContractor}?search=${search}`)
+      return returnData.data;
+    },
+    //search doc number
+    async searchDocNumber(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchDocNumber}?search=${search}`)
+      return returnData.data;
+    },
+    //search doc type
+    async searchDocType(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchDocType}?search=${search}`)
+      return returnData.data;
+    },
+    //search form to
+    async searchFormTo(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchFormTo}?search=${search}`)
+      return returnData.data;
+    },
+    //search model
+    async searchModel(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchModel}?search=${search}`)
+      return returnData.data;
+    },
+    //search name
+    async searchName(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchName}?search=${search}`)
+      return returnData.data;
+    },
+    //search platform
+    async searchPlatForm(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchPlatForm}?search=${search}`)
+      return returnData.data;
+    },
+    //search remark
+    async searchRemark(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchRemark}?search=${search}`)
+      return returnData.data;
+    },
+    //search sub type
+    async searchSubType(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchSubType}?search=${search}`)
+      return returnData.data;
+    },
+    //search tag
+    async searchTag(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchTag}?search=${search}`)
+      return returnData.data;
+    },
+    //search title
+    async searchTitle(search: string) {
+      let returnData = await useAxios().value.get(`${urlSearchTitle}?search=${search}`)
+      return returnData.data;
+    },
+    async upload(data:any){
+      let returnData = await useAxios().value.post(`${urlUploadDocument}`,data)
+      return returnData.data;
+    },
+    async searchDocumentAllChild(folderID: number,search: string){
+      let returnData = await useAxios().value.post(`${urlDocumentSearchAllChild}?folderID=${folderID}&search=${search}`)
+      return returnData.data;
+    },
+    async uploadInsDocument(data:any){
+      let returnData = await useAxios().value.post(`${urlDocumentUploadInsDocument}`,data)
+      return returnData.data;
     }
+
   },
   persist: {
     storage: persistedState.localStorage,
   },
 })
-interface TreeNode {
-  id: number;
-  name: string;
-  type: number;
-  mimeType: string | null;
-  link: {
-      src: string;
-      review: string;
-      screenshot: string;
-  } | null;
-  isDir: boolean;
-  data: TreeNode[];
-}
-
-// Interface for raw data items
-interface TreeItem {
-  id: number;
-  name: string;
-  slug: string;
-  type: number;
-  mimeType: string | null;
-  link: {
-      src: string;
-      review: string;
-      screenshot: string;
-  } | null;
-  is_dir: boolean;
-  folder?: number;
-  data?: number[];
-  parentId?: number;
-}

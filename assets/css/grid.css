@@ -6,10 +6,10 @@
     padding: 0.5rem 0.75rem !important;
     width: 100% !important;
 }
-.p-datatable .p-cell-editing{
+/* .p-datatable .p-cell-editing{
     padding-top: 0 !important;
     padding-bottom: 0 !important;
-}
+} */
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
     background: #EFF6FF !important;
     border-color: #EFF6FF !important;

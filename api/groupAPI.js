@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {urlGroupGetAll,urlUpdateGroup,urlCreateGroup,urlDeleteGroup} from './setupAPI.js'
+import {urlGroupGetAll,urlUpdateGroup,urlCreateGroup,urlDeleteGroup,urlExportGroup,urlImportGroup} from './setupAPI.js'
 export const groupGetAllAPI = async () => {
      
     try {
@@ -48,6 +48,30 @@ export const groupGetAllAPI = async () => {
       const response = await axios.put(`${urlUpdateGroup}`,group, {
           headers: {
               'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  };
+  export const exportGroupAPI = async () => {
+    try {
+      const response = await axios.get(`${urlExportGroup}`,{
+        responseType: 'blob'
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  };
+  export const importGroupAPI = async (formFile) => {
+    try {
+      const response = await axios.post(`${urlImportGroup}`,formFile, {
+          headers: {
+              'Content-Type': 'multipart/form-data',
           },
       });
       return await response.data;

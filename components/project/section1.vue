@@ -30,19 +30,19 @@
                 <template #content>
                     <div class="grid grid-cols-6 gap-3">
                         <span class="text-4xl text-blue-500 col-span-2">
-                            0
+                            {{ data.filter(p=>p.type == 1).length }}
                         </span>
                         <span class="flex flex-wrap w-full col-span-4">
                             <span class="w-full flex items-center">
                                 <span class="text-blue-500 text-xs mr-2">●</span>
                                 <span class="text-gray-500">
-                                    0 đang thực hiện
+                                    {{ data.filter(p=>p.type == 1).length }} đang thực hiện
                                 </span>
                             </span>
                             <span class="w-full flex items-center mt-2">
                                 <span class="text-red-500 text-xs mr-2">●</span>
                                 <span class="text-gray-500">
-                                    0 đang thực hiện
+                                    0 đang tạm dừng
                                 </span>
                             </span>
                         </span>
@@ -54,13 +54,13 @@
                 <template #content>
                     <div class="grid grid-cols-6 gap-3">
                         <span class="text-4xl text-blue-500 col-span-2">
-                            0
+                            {{ data.filter(p=>p.type == 2).length }}
                         </span>
                         <span class="flex flex-wrap w-full col-span-4">
                             <span class="w-full flex items-center">
                                 <span class="text-blue-500 text-xs mr-2">●</span>
                                 <span class="text-gray-500">
-                                    0 đang thực hiện
+                                    {{ data.filter(p=>p.type == 1).length }} đang thực hiện
                                 </span>
                             </span>
                             <span class="w-full flex items-center mt-2">

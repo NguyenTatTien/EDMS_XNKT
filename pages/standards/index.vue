@@ -1,11 +1,14 @@
 <template>
+    <div></div>
+</template>
+<!-- <template>
      <div class="w-full h-full ">
-       <DataTable paginator :rows="10" dataKey="id" scrollable filterDisplay="menu" v-model:selection="selectedDocumentType" @cell-edit-complete="onCellEditComplete"
+       <DataTable paginator :rows="10" dataKey="id" scrollable filterDisplay="row" v-model:selection="selectedDocumentType" @cell-edit-complete="onCellEditComplete"
        :globalFilterFields="['name', 'description']" class="text-xs h-[100%]" :value="documentTypes" showGridlines stripedRows v-model:filters="filters" editMode="cell">
    <template #header>
        <div class="flex justify-between">
            <div class="flex w-[300px]">
-               <!-- <Button icon="pi pi-plus" label="Add New" class="border-[1px] border-solid h-[2.5rem]" @click="visibleDialog = true" style="padding: 0.65625rem 1.09375rem"/> -->
+             
            </div>
            <div class="flex justify-between items-center">
             <Button icon="pi pi-plus" class="mr-2 h-[2rem]" @click="visibleDialog = true"/>
@@ -56,6 +59,7 @@
    import '../../assets/CSS/grid.css'
    import '../../assets/CSS/styleMain.css'
    import {documentTypeByParentAPI} from '../api/documentTypeAPI.js';
+
    import { FilterMatchMode } from 'primevue/api';
    import { ref, onMounted } from 'vue';
    const visibleDialog = ref(false);
@@ -89,12 +93,10 @@
    try{
        var st = confirm("Do you want to delete this group?");
            if (st) {
-               // await deleteGroupAPI(id);
-               // groups.value = groups.value.filter(item => item.id !== id);
-           }
+             
    }catch(error){
        console.log(error);
    }
    }
    </script>
-   
+    -->

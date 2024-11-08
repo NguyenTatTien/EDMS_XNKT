@@ -1,15 +1,68 @@
 <template>
+  <div class="" style="width:100% ; height: 100%">
+      <div id="map">
+              
+      </div>
+  </div>
+</template>
+<script setup>
+import MindElixir from "mind-elixir";
+import example from "mind-elixir/example";
+import { onMounted, ref, watch } from 'vue';
+const emit = defineEmits(['modelValue','nodeData','selectTag']);
+const props = defineProps(['nodeData','selectTag']);
+const nodeData = ref();
+const selectTag = ref();
+const me = ref();
+
+watch(() => props.nodeData, (newValue) => {
+    console.log(newValue);
+    nodeData.value = newValue;
+});
+watch(() => props.selectTag, (newValue) => {
+  selectTag.value = newValue;
+});
+onMounted(() => {
+  nodeData.value = props.nodeData;
+  selectTag.value = props.selectTag;
+  me.value = new MindElixir({
+      el: "#map",
+      direction: MindElixir.LEFT,
+  });
+  example.nodeData.id=''+ selectTag.value.id;
+  example.nodeData.topic = selectTag.value.name;
+example.nodeData.tags[0] = selectTag.value.tagSystemPlant;
+nodeData.value.forEach((item) => {
+    item.parent.id=''+selectTag.value.id,
+    item.parent.topic = selectTag.value.tagSystemPlant,
+    item.parent.expanded = true,
+    item.parent.root = true
+  });
+ 
+  example.nodeData.children = nodeData.value;
+  console.log(example);
+  me.value.init(example);
+  me.value.toCenter();
+});
+</script>
+<style>
+#map {
+  height: 100%;
+  width: 100%;
+}
+.map-container me-tpc>* {
+  pointer-events: all !important;
+}
+</style>
+<!-- <template>
     <VueFlow
  :nodes="nodes" :edges="edges"
  class=".vue-flow__node-custom" />
- <!-- <div>
-  <div id="map"></div>
- </div> -->
+
 </template>
 <script setup>
 import { VueFlow, } from '@vue-flow/core';
-// import MindElixir from "mind-elixir";
-// import example from "mind-elixir/example";
+
 import { ref, onMounted } from 'vue';
 const nodes = ref([
  {
@@ -162,15 +215,17 @@ const edges = ref([
 ]);
 const me = ref();
 onMounted(() => {
-  // me.value = new MindElixir({
-  //   el: "#map",
-  //   direction: MindElixir.LEFT,
-  // });
-  // me.value.init(example);
+
 });
 </script>
 <style>
 @import '@vue-flow/core/dist/theme-default.css';
 @import '@vue-flow/core/dist/style.css';
 
+</style> -->
+<style>
+.main-node-container img{
+  float: left;
+  margin-right: 5px;
+}
 </style>

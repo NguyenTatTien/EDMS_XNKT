@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {urlFolderGetNotParentByCategory,urlFolderGetByParentAndCategory,urlMoveFolderToFolder,urlCretateFolder,urlUpdateFolder,urlDeleteFolder,urlCopyFolder,urlSearchFolder} from './setupAPI.js'
+import {urlFolderGetNotParentByCategory,urlFolderGetByParentAndCategory,urlMoveFolderToFolder,urlCretateFolder,urlUpdateFolder,urlDeleteFolder,urlCopyFolder,urlSearchFolder,urlGetFolderByName,urlDownloadFolder} from './setupAPI.js'
 export const folderGetNotParentByCategoryAPI = async (categoryId) => {
     try {
       const response = await axios.get(`${urlFolderGetNotParentByCategory}?categoryId=${categoryId}`, {
@@ -13,9 +13,9 @@ export const folderGetNotParentByCategoryAPI = async (categoryId) => {
       // Handle network or other errors
     }
   };
-  export const folderGetByParentAndCategoryAPI = async (parentId,categoryId) => {
+  export const folderGetByParentAndCategoryAPI = async (parentId,categoryId,userId) => {
     try {
-      const response = await axios.get(`${urlFolderGetByParentAndCategory}?parentId=${parentId}&categoryId=${categoryId}`, {
+      const response = await axios.get(`${urlFolderGetByParentAndCategory}?parentId=${parentId}&categoryId=${categoryId}&userId=${userId}`, {
           headers: {
               'Content-Type': 'application/json',
           },
@@ -104,3 +104,33 @@ export const folderGetNotParentByCategoryAPI = async (categoryId) => {
       // Handle network or other errors
     }
   }
+  export const getFolderByNameAPI = async (name,parentID,categoryID) => {
+    try {
+      const response = await axios.get(`${urlGetFolderByName}?name=${name}&parentID=${parentID}&categoryID=${categoryID}`, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+      return await response.data;
+    } catch (error) {
+      throw error;
+      // Handle network or other errors
+    }
+  }
+  export const downloadFolderAPI = async (folderID, categoryID) => {
+    try {
+      const response = await axios.get(`${urlDownloadFolder}?selectfolder=${folderID}&categoryID=${categoryID}`, {
+        responseType: 'blob',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/zip'
+        }
+      });
+      return await response;
+    } catch (error) {
+      console.log(error);
+      // Handle network or other errors
+    }
+  }
+
+  
